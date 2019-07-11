@@ -1,0 +1,435 @@
+<form (ngSubmit)="onRegistrar()" #registroForm="ngForm">
+    <div class="row">
+        <div class="col-md-12 border-bottom">
+            <h5>Datos del Procedimiento Judicial/Jurisdiccional</h5>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="col-md-12">
+                <div class="form-group form-row">
+                    <div class="col-4">
+                        <label for="oficio">Oficio o Resolución Administrativa:</label>
+                    </div>
+                    <div class="col-8">
+                        <input 
+                        class="form-control w-100"
+                        type="text"
+                        id="oficio"
+                        name="oficio"
+                        ngModel
+                        required
+                        #oficio="ngModel">
+                        <small
+                        class="form-text text-muted"
+                        *ngIf="!oficio.valid && oficio.touched"
+                        >El Oficio o Resolución son obligatorios!</small>
+                    </div>
+                </div>
+                <div class="form-group form-row">
+                    <div class="col-4">
+                        <label for="expediente">Expediente del Juicio: </label>
+                    </div>
+                    <div class="col-8">
+                        <input 
+                        class="form-control"
+                        type="text"
+                        id="expediente"
+                        name="expediente"
+                        ngModel
+                        required
+                        #expediente="ngModel">
+                        <small
+                        class="form-text text-muted"
+                        *ngIf="!expediente.valid && expediente.touched"
+                        >Indica por favor el Expediente del Juicio!</small>
+                    </div>
+                </div>
+                <div class="form-group form-row">
+                    <div class="col-4">
+                        <label for="fechaNotificacion">Fecha Notificación de Resolución: </label>
+                    </div>
+                    <div class="col-8">
+                        <input 
+                        type="date"
+                        class="form-control"
+                        id="fechaNotificacion"
+                        name="fechaNotificacion"
+                        ngModel
+                        required
+                        #fechaNotificacion="ngModel">
+                        <small
+                        class="form-text text-muted"
+                        *ngIf="!fechaNotificacion.valid && fechaNotificacion.touched">Indica la fecha de notificación de Resolución!</small>
+                    </div>
+                </div>
+                <div class="form-group form-row">
+                    <div class="col-4">
+                        <label for="autoridadImpositora">Autoridad Administrativa Impositora: </label>
+                    </div>
+                    <div class="col-8">
+                        <button 
+                        type="button"
+                        class="btn btn-primary"
+                        id="autoridadImpositora"
+                        name="autoridadImpositora"
+                        data-toggle="modal" data-target="#AutoridadModal"
+                        >Buscar</button> 
+                    </div>
+                </div>
+                <div class="form-group form-row">
+                    <div class="col-4"></div>
+                    <div class="col-8">
+                        <label class="row"><strong>RFC:</strong> &nbsp;&nbsp;{{ autoridad.rfc }}</label>
+                        <label class="row"><strong>Número Autoridad:</strong>&nbsp;&nbsp; {{ autoridad.numAutoridad }} </label>
+                        <label class="row"><strong>Razón Social:</strong>&nbsp;&nbsp; {{ autoridad.razonSocial }}</label>
+                        <label class="row"><strong>Tipo de Persona:</strong>&nbsp;&nbsp; {{ autoridad.tipoPersona }}</label>
+                    </div>
+                </div>
+                <div class="form-group form-row">
+                    <div class="col-4">
+                        <label for="fechaDemanda">Fecha de Demanda: </label>
+                    </div>
+                    <div class="col-8">
+                        <input 
+                        type="date"
+                        class="form-control"
+                        id="fechaDemanda"
+                        name="fechaDemanda"
+                        ngModel
+                        required
+                        #fechaDemanda = "ngModel">
+                        <small
+                        class="form-text text-muted"
+                        *ngIf="!fechaDemanda.valid && fechaDemanda.touched"
+                        >La fecha de la Demanda es obligatoria!</small>
+                    </div>
+                </div>
+                <div class="form-group form-row">
+                    <div class="col-4">
+                        <label for="tipoDemanda">Tipo Demanda:</label>
+                    </div>
+                    <div class="col-8">
+                        <select 
+                        id="tipoDemanda" 
+                        name="tipoDemanda" 
+                        class="form-control"
+                        ngModel
+                        required
+                        #tipoDemanda="ngModel">
+                            <option  
+                            *ngFor="let tipoDemanda of tiposDemanda"
+                            [value]="tipoDemanda">{{ tipoDemanda }}</option>
+                        </select>
+                        <small
+                        class="form-text text-muted"
+                        *ngIf="!tipoDemanda.valid && tipoDemanda.touched">El tipo de Demanda es obligatorio!</small>
+                    </div>
+                </div>
+                <div class="form-group form-row">
+                    <div class="col-4">
+                        <label for="participaTercero">Tipo Participación:</label>
+                    </div>
+                    <div class="col-8">
+                        <select 
+                        id="participaTercero" 
+                        name="participaTercero" 
+                        class="form-control"
+                        ngModel
+                        required
+                        #participaTercero="ngModel">
+                            <option  
+                            *ngFor="let tipoParticipacion of tiposParticipacion; let i of index"
+                            [value]="i">{{ tipoParticipacion }}</option>
+                        </select>
+                        <small
+                        class="form-text text-muted"
+                        *ngIf="!participaTercero.valid && participaTercero.touched"
+                        >Indica el tipo de participación del proveedor!</small>
+                        <small
+                        class="form-text text-muted"
+                        *ngIf="((participaTercero.value == participaWalmart.value) && (participaTercero.touched) && (participaWalmart.touched))"
+                        >La participación del proveedor debe ser diferente a la de Walmart!</small>
+                    </div>
+                </div>
+                <div class="form-group form-row">
+                    <div class="col-4">
+                        <label for="motivoDemanda">Motivo de la Demanda:</label>
+                    </div>
+                    <div class="col-8">
+                        <input
+                        type="text"
+                        class="form-control"
+                        id="motivoDemanda"
+                        name="motivoDemanda"
+                        ngModel
+                        required
+                        #motivoDemanda="ngModel"
+                        >
+                        <small
+                        class="form-text text-muted"
+                        *ngIf="!motivoDemanda.valid && motivoDemanda.touched">Indica el Motivo de la demanda!</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="col-md-12">
+                <div class="form-group form-row">
+                        <div class="col-4">
+                            <label for="sociedad">Sociedad:</label>
+                        </div>
+                        <div class="col-8">
+                            <select 
+                            name="sociedad" 
+                            class="form-control"
+                            id="sodiedad" 
+                            name="sociedad"
+                            ngModel
+                            required
+                            #sociedad="ngModel"
+                            >
+                                <option 
+                                *ngFor="let sociedad of sociedades"
+                                [value]="sociedad">{{ sociedad }}</option>
+                            </select>
+                            <small
+                            class="form-text text-muted"
+                            *ngIf="!sociedad.valid && sociedad.touched">Es necesario indicar la Sociedad!</small>
+                        </div>
+                </div>
+                <div class="form-group form-row">
+                    <div class="col-4">
+                        <label for="determinante">Determinante:</label>
+                    </div>
+                    <div class="col-8">
+                        <button 
+                        class="btn btn-primary" 
+                        type="button"
+                        data-toggle="modal"
+                        data-target="#determinanteModal">Seleccionar</button>
+                    </div> 
+                </div>
+                <div class="form-group form-row">
+                    <div class="col-4"></div>
+                    <div class="col-8">
+                        <label 
+                        name="idDeterminante" 
+                        class="row"
+                        ><strong>ID:</strong>&nbsp;&nbsp; {{ determinante.numDeterminante }}</label>
+                        <label 
+                        name="nombreDeterminante"
+                        class="row"
+                        ><strong>Nombre:</strong>&nbsp;&nbsp; {{ determinante.nombreDeterminante }}</label>
+                    </div>
+                </div>
+                <div class="form-group form-row">
+                    <div class="col-4">
+                        <label for="formato">Formato:</label>
+                    </div>
+                    <div class="col-8">
+                        <input 
+                        class="form-control"
+                        id="formato"
+                        name="formato"
+                        type="text"
+                        disabled="true"
+                        [ngModel]="determinante.formatoDeterminante"
+                        required
+                        #formato="ngModel">
+                        <small
+                        class="form-text text-muted"
+                        *ngIf="!formato.valid && formato.touched">El formtato es obligatorio, valida la determinante!</small>
+                    </div>
+                </div>
+                <div class="form-group form-row">
+                    <div class="col-4">
+                        <label for="participaWalmart">Wal-mart Participa como:</label>
+                    </div>
+                    <div class="col-8">
+                        <select 
+                        name="participaWalmart" 
+                        id="participaWalmart"
+                        class="form-control"
+                        ngModel
+                        required
+                        #participaWalmart="ngModel"
+                        >
+                            <option 
+                            *ngFor="let tipoParticipacion of tiposParticipacion; let i of index"
+                            [value]="i">{{ tipoParticipacion }}</option>
+                        </select>
+                        <small
+                        class="form-text text-muted"
+                        *ngIf="!participaWalmart.valid && participaWalmart.touched"
+                        >Indica el tipo de participación de Walmart</small>
+                        <small
+                        class="form-text text-muted"
+                        *ngIf="(participaWalmart.value == participaTercero.value && participaWalmart.touched)"
+                        >La participación de Walmart debe ser diferente al proveedor!</small>
+                    </div>
+                </div>
+                <div class="form-group form-row">
+                    <div class="col-4">
+                        <label for="importeHistorico">Importe Histórico de la Multa:</label>
+                    </div>
+                    <div class="col-8">
+                        <input 
+                        type="number"
+                        id="importeHistorico"
+                        name="importeHistorico"
+                        class="form-control"
+                        ngModel
+                        required
+                        #importeHistorico="ngModel">
+                        <small 
+                        class="form-text text-muted"
+                        *ngIf="!importeHistorico.valid && importeHistorico.touched"
+                        >El importe histórico es obligatorio!</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="col-md-12"></div>
+        </div>
+        <div class="col-md-6">
+            <div class="col-md-12">
+                <button 
+                class="btn btn-warning btn-continuar" 
+                type="submit"
+                [disabled]="(!registroForm.valid)">Siguiente</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+<div class="modal fade" 
+id="determinanteModal" 
+tabindex="-1" 
+role="dialog" 
+aria-labelledby="determinanteModalLabel" 
+aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="determinanteModalLabel">Buscar Determinante</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+                <label for="store-id" class="col-form-label">Numero Determinante:</label>
+                <input type="number" class="form-control" id="store-number">
+            </div>
+            <div class="form-group">
+              <label for="store-name" class="col-form-label">Nombre Determinante:</label>
+              <input type="text" class="form-control" id="store-name">
+            </div>
+            <div class="form-group">
+                <button type="button" class="btn btn-primary">Buscar</button>
+            </div>
+          </form>
+          <div>
+                <table class="table table-striped">
+                    <thead>
+                        <th></th>
+                        <th># Determinante</th>
+                        <th>Nombre Determinante</th>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><button 
+                                type="button" 
+                                class="btn btn-primary btn-sm"
+                                (click)="seleccionDeterminante()"
+                                data-dismiss="modal"
+                                >Seleccionar</button></td>
+                            <td>09876</td>
+                            <td>Sams Universidad</td>
+                        </tr>
+                        <tr>
+                            <td><button 
+                                type="button" 
+                                class="btn btn-primary btn-sm"
+                                (click)="seleccionDeterminante()"
+                                data-dismiss="modal"
+                                >Seleccionar</button></td>
+                            <td>07852</td>
+                            <td>Oficinas Azcapotzalco</td>
+                        </tr>
+                    </tbody>
+                </table>
+              </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="AutoridadModal" tabindex="-1" role="dialog" aria-labelledby="AutoridadModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="AutoridadModalLabel">Buscar Autoridad</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label for="autoridad-id" class="col-form-label">Numero Proveedor:</label>
+              <input type="number" class="form-control" id="autoridad-number">
+            </div>
+            <div class="form-group">
+                <label for="autoridad-name" class="col-form-label">Nombre Autoridad:</label>
+                <input type="text" class="form-control" id="autoridad-name">
+            </div>
+            <div class="form-group">
+                <button type="button" class="btn btn-primary">Buscar</button>
+            </div>
+          </form>
+          <div>
+            <table class="table table-striped">
+                <thead>
+                    <th></th>
+                    <th># Proveedor</th>
+                    <th>Nombre Proveedor</th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><button 
+                            type="button" 
+                            class="btn btn-primary btn-sm"
+                            (click)="seleccionAutoridad()"
+                            data-dismiss="modal">Seleccionar</button></td>
+                        <td>12345</td>
+                        <td>Patito, S.A. de C.V.</td>
+                    </tr>
+                    <tr>
+                        <td><button 
+                            type="button" 
+                            class="btn btn-primary btn-sm"
+                            (click)="seleccionAutoridad()"
+                            data-dismiss="modal">Seleccionar</button></td>
+                        <td>12345</td>
+                        <td>Zapatos, S.A. de C.V.</td>
+                    </tr>
+                </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>

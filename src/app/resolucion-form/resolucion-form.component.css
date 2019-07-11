@@ -1,0 +1,29 @@
+    h5 {
+        color: gray;
+    }
+
+    label {
+        padding: 0px;
+    }
+
+    body {
+        line-height: 0px;
+        min-width: 575.98px;
+    }
+
+    .btn-continuar {
+        float: right;
+        margin-left: 5px;
+    }
+.row.border-bottom {
+    margin-bottom: 15px;
+}
+ul.btn-group {
+    padding: 0px;
+    float: left;
+}
+
+.col-md-12.border-bottom {
+    padding-left: 0px;
+    margin-bottom: 10px;
+}

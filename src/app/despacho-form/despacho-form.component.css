@@ -1,0 +1,49 @@
+
+    h5 {
+        color: gray;
+    }
+
+    label {
+        padding: 0px;
+    }
+
+    body {
+        line-height: 0px;
+        min-width: 575.98px;
+    }
+
+    .btn-continuar {
+        float: right;
+    }
+
+    .border-bottom{
+        margin-bottom: 10px;
+    }
+
+    li.list-group-item {
+        padding: 5px 10px;
+        display: inline-block;
+    }
+
+    .inlineAbogados {
+        display: inline;
+    }
+
+    input.inlineAbogados {
+        height: 15px;
+    }
+
+    .btn-group {
+        float: right;
+    }
+
+    .btn.btn-continuar {
+        margin: 0 2px;
+        margin-top: 15px;
+    }
+
+    .col-md-12.border-bottom {
+        padding-left: 0px;
+    }
+
+

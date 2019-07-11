@@ -1,0 +1,341 @@
+<form>
+    <div class="row">
+        <div class="col-md-12 border-bottom">
+            <h5>Detalles del procedimiento Judicial/Jurisdiccional</h5>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="col-md-12">
+                <div class="form-group form-row">
+                    <div class="col-md-12">
+                        <label for="sociedad">Sociedad:</label>
+                        <label id="sociedad" name="sociedad">{{ sociedad }}</label>
+                    </div>
+                </div>
+                <div class="form-group form-row">
+                    <div class="col-md-12">
+                        <label for="determinante">Determinante:</label>
+                        <label id="determinante" name="determinante">{{ determinante }}</label>
+                    </div>
+                </div>
+                <div class="form-group form-row">
+                    <div class="col-md-12">
+                        <label for="expJuicio">Expediente Juicio:</label>
+                        <label id="expJuicio" name="expJuicio">{{ expJuicio }}</label>
+                    </div>
+                </div>
+                <div class="form-group form-row">
+                    <div class="col-md-12">
+                        <label for="despacho">Despacho:</label>
+                        <label id="despacho" name="despacho">{{ despacho }}</label>
+                    </div>
+                </div>
+                <div class="form-group form-row">
+                    <div class="col-md-12">
+                        <label for="reclamo">Reclamo:</label>
+                        <label id="reclamo" name="reclamo">{{ reclamo }}</label>
+                    </div>
+                </div>
+                <div class="form-group form-row">
+                    <div class="col-md-12">
+                        <label for="fechaDemanda">Fecha Demanda:</label>
+                        <label id="fechaDemanda" name="fechaDemanda">{{ fechaDemanda }}</label>
+                    </div>
+                </div>
+                <div class="form-group form-row">
+                    <div class="col-12">
+                        <label for="oficioResolucion">Oficio Resolución Admnistrativa:</label>
+                        <label id="oficioResolucion" name="oficioResolucion">{{ oficioResolucion }}</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="col-md-12">
+                <div class="form-group form-row">
+                    <div class="col-md-12">
+                        <label for="autoridad">Autoridad:</label>
+                        <label id="autoridad" name="autoridad">{{ autoridad }}</label>
+                    </div>
+                </div>
+                <div class="form-group form-row">
+                    <div class="col-md-12">
+                        <label for="tribunalJuzgado">Tribunal o Juzgado:</label>
+                        <label id="tribunalJuzgado" name="tribunalJuzgado">{{ tribunalJuzgado }}</label>
+                    </div>
+                </div>
+                <div class="form-group form-row">
+                    <div class="col-md-12">
+                        <label for="importeHistorico">Importe Histórico del Juicio:</label>
+                        <label id="importeHistorico" name="importeHistorico">{{ importeHistorico }}</label>
+                    </div>
+                </div>
+                <div class="form-group form-row">
+                    <div class="col-md-12">
+                        <label for="pago">Pago (si/no):</label>
+                        <label id="pago" name="pago">{{ pago }}</label>
+                    </div>
+                </div>
+                <div class="form-group form-row">
+                    <div class="col-md-12">
+                        <label for="fianza">fianza (si/no):</label>
+                        <label id="fianza" name="fianza">{{ fianza }}</label>
+                    </div>
+                </div>
+                <div class="form-group form-row">
+                    <div class="col-md-12">
+                        <label for="embargo">Embargo (si/no):</label>
+                        <label id="embargo" name="embargo">{{ embargo }}</label>
+                    </div>
+                </div>
+            </div>
+        </div>  
+        <div class="col-md-4">
+            <div class="col-md-12">
+                <div class="form-group form-row">
+                    <div class="col-4">
+                            <label for="fechaSuspension">Fecha de Suspensión:</label>
+                    </div>
+                    <div class="col-8">
+                            <input 
+                            class="form-control"
+                            type="date"
+                            id="fechaSuspension"
+                            name="fechaSuspension"
+                            ngModel>
+                    </div>
+                </div>
+                <div class="form-group form-row">
+                    <div class="col-4">
+                        <label for="resolucionSuspension">Resolución de Suspensión:</label>
+                    </div>
+                    <div class="col-8">
+                        <select 
+                        name="resolucionSuspension" 
+                        id="resolucionSuspension"
+                        class="form-control">
+                            <option 
+                            *ngFor="let resolucion of resoluciones"
+                            value="resolucion">{{ resolucion }}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group form-row">
+                    <div class="col-4">
+                        <label for="sentenciaTFJFA">Sentencia TFJFA JZ o TCADMON:</label>
+                    </div>
+                    <div class="col-8">
+                        <textarea 
+                        type="text"
+                        id="sentenciaTFJFA"
+                        name="sentenciaTFJFA"
+                        class="form-control"
+                        rows="2"
+                        ngModel></textarea>
+                    </div>
+                </div>
+                <div class="form-group form-row">
+                    <div class="col-4">
+                        <label for="sentenciaDefinitiva">Sentencia Definitiva:</label>
+                    </div>
+                    <div class="col-8">
+                        <textarea 
+                        type="text"
+                        id="sentenciaDefinitiva"
+                        name="sentenciaDefinitiva"
+                        class="form-control"
+                        rows="2"
+                        ngModel></textarea>
+                    </div>
+                </div>
+                <div class="form-group form-row">
+                    <div class="col-4">
+                        <label for="resultadoFinal">Resultado Final:</label>
+                    </div>
+                    <div class="col-8">
+                        <textarea 
+                        type="text"
+                        id="resultadoFinal"
+                        name="resultadoFinal"
+                        class="form-control"                                
+                        rows="2"
+                        ngModel></textarea>
+                    </div>
+                </div>
+                <div class="form-group form-row">
+                    <div class="col-4">
+                        <label for="estadoFinal">Estado Final:</label>
+                    </div>
+                    <div class="col-8">
+                        <textarea 
+                        type="text"
+                        id="estadoFinal"
+                        name="estadoFinal"
+                        class="form-control"                                
+                        rows="2"
+                        ngModel></textarea>
+                    </div>
+                </div>
+                <div class="form-group form-row">
+                    <div class="col-4"></div>
+                    <div class="col-8">
+                        <div class="btn-group">
+                            <button 
+                            class="btn btn-outline-dark btn-continuar" 
+                            type="button">Anterior</button>
+                            <button 
+                            type="submit"
+                            class="btn btn-warning btn-continuar">Guardar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<div class="row">
+    <div class="col-md-12 border-bottom">
+        <h5>Audiencias</h5>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-9"></div>
+        <div class="col-md-3">
+            <button 
+            class="btn btn-primary"
+            type="button"
+            data-toggle="modal"
+            data-target="#audienciaModal">Agregar Audiencia</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <th>Opciones</th>
+                        <th>Tribunal o Juzgado</th>
+                        <th>Fecha de Audiencia</th>
+                        <th>Hora</th>
+                        <th>Estado</th>
+                        <th>Factibilidad</th>
+                        <th>Etapa Procesal</th>
+                    </thead>
+                    <tbody>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="audienciaModal" tabindex="-1" role="dialog" aria-labelledby="audienciaModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="audienciaModalLabel">Agregar Audiencia</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="form-group form-inline">
+                  <label for="fechaAudiencia" class="col-4 col-form-label">Fecha:</label>
+                  <input type="date" class="col-8 form-control" id="fechaAudiencia">
+                </div>
+                <div class="form-group form-inline">
+                    <label for="horaAudiencia" class="col-4 col-form-label">Hora:</label>
+                    <select 
+                    name="horaAudiencia"
+                    id="horaAudiencia"
+                    class="col-4 form-control">
+                        <option 
+                        *ngFor="let hora of horas"
+                        value="hora">{{ hora }}</option>
+                    </select>
+                    <select 
+                    name="minutoAudiencia"
+                    id="minutoAudiencia"
+                    class="col-4 form-control">
+                        <option 
+                        *ngFor="let minuto of minutos"
+                        value="minuto">{{ minuto }}</option>
+                    </select>
+                </div>
+                <div class="form-group form-inline">
+                    <label for="estadoAudiencia" class="col-4 col-form-label">Estado:</label>
+                    <select 
+                    class="col-8 form-control"
+                    name="estadoAudiencia" 
+                    id="estadoAudiencia">
+                        <option 
+                        *ngFor="let estado of estados"
+                        value="estado">{{ estado }}</option>
+                    </select>
+                </div>
+                <div class="form-group form-inline">
+                    <label for="factibilidadAudiencia" class="col-4 col-form-label">Factibilidad:</label>
+                    <select 
+                    class="col-8 form-control"
+                    name="factibilidadAudiencia" 
+                    id="factibilidadAudiencia">
+                        <option 
+                        *ngFor="let factibilidad of factibilidades"
+                        value="factibilidad">{{ factibilidad }}</option>
+                    </select>
+                </div>
+                <div class="form-group form-inline">
+                    <label for="etapaAudiencia" class="col-4 col-form-label">Etapa Procesal:</label>
+                    <select 
+                    class="col-8 form-control"
+                    name="etapaAudiencia" 
+                    id="etapaAudiencia">
+                        <option 
+                        *ngFor="let etapaProcesal of EtapasProcesales"
+                        value="etapaProcesal">{{ etapaProcesal }}</option>
+                    </select>
+                </div>
+                <div class="form-group form-inline">
+                    <label for="tribunalJuzgado" class="col-4 col-form-label">Tribunal o Juzgado:</label>
+                    <input 
+                    type="text" 
+                    id="tribunalJuzgado" 
+                    name="tribunalJuzgado"
+                    class="col-8 form-control"
+                    ngModel>
+                </div>
+                <div class="form-group form-inline">
+                    <label for="numExpediente" class="col-4 col-form-label">Número de Expediente:</label>
+                    <input 
+                    type="text" 
+                    id="numExpediente" 
+                    name="numExpediente"
+                    class="col-8 form-control"
+                    ngModel>
+                </div>
+                <div class="form-group form-inline">
+                    <label for="observaciones" class="col-4 col-form-label">Observaciones:</label>
+                    <textarea 
+                    class="col-8 form-control"
+                    name="observaciones" 
+                    id="observaciones" 
+                    name="observaciones" 
+                    rows="3"
+                    ngModel></textarea>
+                </div>
+              </form>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-warning" data-dismiss="modal">Agregar Audiencia</button>
+                <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Cancelar</button>
+            </div>
+          </div>
+        </div>
+      </div>

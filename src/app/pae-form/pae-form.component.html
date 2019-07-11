@@ -1,0 +1,214 @@
+<form (ngSubmit)="avanzaPAE()" #paeForm="ngForm">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="col-md-12 border-bottom">
+                <h5>Datos del Procedimiento Administrativo de Ejecución</h5>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group form-row">
+                            <div class="col-4">
+                                <label for="pae">PAE:</label>
+                            </div>
+                            <div class="col-8 form-inline">
+                                <input 
+                                type="checkbox"
+                                class="form-control"
+                                name="pae"
+                                id="pae"
+                                ngModel
+                                >
+                                <label class="checkLabel">Sí</label>
+                            </div>
+                </div>
+                <div class="form-group form-row">
+                            <div class="col-4">
+                                <label for="clausura">Clausura:</label>
+                            </div>
+                            <div class="col-8 form-inline">
+                                <input 
+                                type="checkbox"
+                                name="clausura"
+                                id="clausura"
+                                class="form-control"
+                                ngModel>
+                                <label class="checkLabel">Sí</label>
+                            </div>
+                </div>
+                <div class="form-group form-row">
+                            <div class="col-4">
+                                <label for="embargo">Embargo:</label>
+                            </div>
+                            <div class="col-8 form-inline">
+                                <input 
+                                type="checkbox"
+                                name="embargo"
+                                id="embargo"
+                                class="form-control"
+                                ngModel>
+                                <label class="checkLabel">Sí</label>
+                            </div>
+                </div>
+                <div class="form-group form-row">
+                            <div class="col-4">
+                                <label for="tipoEmbargo">Tipo de Embargo:</label>
+                            </div>
+                            <div class="col-8">
+                                <select 
+                                name="tipoEmbargo" 
+                                id="tipoEmbargo"
+                                class="form-control"
+                                ngModel>
+                                    <option 
+                                    *ngFor="let tipoEmbargo of tiposEmbargo"
+                                    value="tipoEmbargo">{{ tipoEmbargo }}</option>
+                                </select>
+                            </div>
+                </div>
+                <div class="form-group form-row">
+                            <div class="col-4">
+                                <label for="fechaNotificacion">Fecha de Embargo:</label>
+                            </div>
+                            <div class="col-8">
+                                <input 
+                                type="datetime-local"
+                                class="form-control"
+                                data-provide="datepicker"
+                                id="fechaEmbargo"
+                                name="fechaEmbargo"
+                                ngModel
+                                ngbDatepicker
+                                required>
+                            </div>
+                </div>
+                <div class="form-group form-row">
+                            <div class="col-4">
+                                <label for="cancelaEmbargo">Cancelación de Embargo:</label>
+                            </div>
+                            <div class="col-8 form-inline">
+                                <input 
+                                type="checkbox"
+                                id="cancelaEmbargo"
+                                name="cancelaEmbargo"
+                                class="form-control"
+                                ngModel>
+                                <label class="checkLabel">Sí</label>
+                            </div>
+                </div>
+                <div class="form-group form-row">
+                            <div class="col-4">
+                                <label for="solRetiroEmbargo">Solicitud Retiro Embargo:</label>
+                            </div>
+                            <div class="col-8 form-inline">
+                                <input 
+                                type="checkbox"
+                                name="solRetiroEmbargo"
+                                id="solRetiroEmbargo"
+                                class="form-control"
+                                ngModel>
+                                <label class="checkLabel">Sí</label>
+                            </div>
+                </div>
+                <div class="form-group form-row">
+                            <div class="col-4">
+                                <label for="remocionDepositaria">Remoción Depositaria:</label>
+                            </div>
+                            <div class="col-8 form-inline">
+                                <input 
+                                type="checkbox"
+                                id="remocionDepositaria"
+                                name="remocionDepositaria"
+                                class="form-control"
+                                ngModel>
+                                <label class="checkLabel">Sí</label>
+                            </div>
+                </div>
+                <div class="form-group form-row">
+                            <div class="col-4">
+                                <label for="pagado">Pagado:</label>
+                            </div>
+                            <div class="col-8 form-inline">
+                                <input 
+                                type="checkbox"
+                                id="pagado"
+                                name="pagado"
+                                class="form-control"
+                                ngModel>
+                                <label class="checkLabel">Sí</label>
+                            </div>
+                </div>
+                <div class="form-group form-row">
+                            <div class="col-4">
+                                <label for="garantizado">Garantizado:</label>
+                            </div>
+                            <div class="col-8 form-inline">
+                                <input 
+                                type="checkbox"
+                                name="garantizado"
+                                id="garantizado"
+                                class="form-control"
+                                ngModel>
+                                <label class="checkLabel">Sí</label>
+                            </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="col-md-12 border-bottom">
+                <h5>Bienes Embargados</h5>
+            </div>
+            <div class="col-md-12">
+                <label>Descripción de Bienes Embargados:</label>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group form-row">
+                    <div class="col-9">
+                        <input 
+                        type="text"
+                        id="bienEmbargado"
+                        name="bienEmbargado"
+                        class="form-control"
+                        ngModel>
+                    </div>
+                    <div class="col-3">
+                        <button type="button" class="btn btn-warning">Agregar</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 form-inline">
+                <div class="col-2">
+                    <label>Id</label>
+                </div>
+                <div class="col-7">
+                    <label>Descripción del Bien</label>
+                </div>
+                <div class="col-3"></div>                        
+            </div>
+            <div class="col-md-12">
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <label class="col-2">1</label>
+                        <label class="col-7">Bien</label>
+                        <button type="button" class="btn btn-sm btn-danger col-3">Eliminar</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>        
+    <div class="row">
+        <div class="col-md-6"></div>
+        <div class="col-md-6">
+            <div class="col-md-12">
+                <div class="btn-group">
+                    <button 
+                    class="btn btn-outline-dark btn-continuar" 
+                    type="button"
+                    routerLink="../registro">Anterior</button>
+                    <button 
+                    class="btn btn-warning btn-continuar" 
+                    type="submit"
+                    [disabled]="(!paeForm.valid && paeForm.untouched)">Siguiente</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

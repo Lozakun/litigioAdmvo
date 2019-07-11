@@ -1,0 +1,51 @@
+@media (max-width: 576px) { 
+    li {
+        text-decoration: none;
+        cursor: pointer;
+        list-style: none;
+        color: white;
+        margin-right: 3px;
+    }
+
+    body {
+        min-width: 575.98px;
+    }
+
+    a.btn.btn-primary.btn-lg {
+        text-align: left;
+    }
+
+    ul.btn-group {
+        padding: 0px;
+        float: left;
+    }
+    .col-12 {
+        padding: 0;
+    }
+}
+
+@media (min-width: 576px) { 
+    li {
+        text-decoration: none;
+        cursor: pointer;
+        list-style: none;
+        color: white;
+        margin-right: 3px;
+    }
+
+    body {
+        min-width: 575.98px;
+    }
+
+    a.btn.btn-primary.btn-lg {
+        text-align: left;
+    }
+
+    ul.btn-group {
+        padding: 0px;
+        float: left;
+    }
+    .col-12 {
+        padding: 0;
+    }
+}

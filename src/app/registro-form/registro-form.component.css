@@ -1,0 +1,29 @@
+
+    h5 {
+        color: gray;
+    }
+
+    label {
+        padding: 0px;
+    }
+
+    body {
+        line-height: 0px;
+        min-width: 575.98px;
+    }
+
+    .btn-continuar {
+        float: right;
+    }
+
+    .col-md-12.border-bottom {
+        margin-bottom: 10px;
+    }
+
+    input.ng-invalid.ng-touched, select.ng-invalid.ng-touched {
+        border: 1px solid red;
+    }
+
+    small.form-text.text-muted {
+        color: red!important;
+    }
