@@ -103,7 +103,7 @@
               "e2e/tsconfig.json"
             ],
             "exclude": [
-              
+              "**/node_modules/**"
             ]
           }
         },

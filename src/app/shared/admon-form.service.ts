@@ -1,5 +1,12 @@
-import { NgForm } from '@angular/forms';
+import { RegistroDemandaAdmon } from './registroDemandaAdmon.model';
 
 export class AdmonFormService {
-    admonForm: NgForm;
+    registro: RegistroDemandaAdmon;
+
+    // constructor() {
+    //     this.registro.folioDemanda = '';
+    //     this.registro.expediente = '';
+    //     this.registro.oficio = '';
+    //     this.registro.autoridadImpositora = {0, '', '', '',};
+    // }
 }

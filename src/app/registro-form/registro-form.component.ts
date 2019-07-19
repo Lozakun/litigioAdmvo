@@ -24,6 +24,7 @@ export class RegistroFormComponent implements OnInit {
   @ViewChild('sociedad', {static: false}) sociedad: NgModel;
   @ViewChild('participaWalmart', {static: false}) participaWalmart: NgModel;
   @ViewChild('importeHistorico', {static: false}) importeHistorico: NgModel;
+  @ViewChild('autoridadImpositora', {static: false}) autoridadImpositora: Proveedor;
   tiposDemanda = ['Requerimiento', 'Demanda', 'Resolución'];
   tiposParticipacion = ['Actor', 'Demandado', 'Tercero'];
   sociedades = ['Sociedad 1', 'Sociedad 2', 'Sociedad 3'];
@@ -31,26 +32,37 @@ export class RegistroFormComponent implements OnInit {
   determinante: Determinante = {numDeterminante: '', nombreDeterminante: '', formatoDeterminante: ''};
   registroDemanda: RegistroDemandaAdmon;
   folioDemanda: string;
+  autoridadImpositoraSeleccionada = false;
 
-  constructor(private admonFormService: AdmonFormService, private routes: Router) { }
+  constructor(private admonFormService: AdmonFormService, private router: Router) { }
 
   ngOnInit() {
   }
 
   onRegistrar() {
     console.log('Intento de Registro!');
-    this.folioDemanda = 'LA - ' + Math.floor(Math.random() * (999999 - 1) + 1);
-    this.registroDemanda = new RegistroDemandaAdmon(this.folioDemanda, this.oficio.value, this.expediente.value,
-      this.fechaNotificacion.value, this.autoridad, this.fechaDemanda.value, this.tipoDemanda.value,
+    if (this.autoridadImpositoraSeleccionada) {
+      this.folioDemanda = 'LA - ' + Math.floor(Math.random() * (999999 - 1) + 1);
+      this.registroDemanda = new RegistroDemandaAdmon(this.folioDemanda, this.oficio.value, this.expediente.value,
+      this.fechaNotificacion.value, this.autoridadImpositora, this.fechaDemanda.value, this.tipoDemanda.value,
       this.participaTercero.value, this.motivoDemanda.value, this.sociedad.value, this.determinante,
       this.participaWalmart.value, this.importeHistorico.value);
-    console.log(this.registroDemanda);
-    // this.routes.navigate(['pae']); arreglar el cambio de ruta
+      console.log(this.registroDemanda);
+      this.router.navigate(['litigioAdmvo', 'pae']);
+    } else {
+      console.log('Debes terminar de llenar los campos!');
+    }
     // integrar el servicio
   }
 
   seleccionAutoridad() {
     console.log('seleccionando autoridad..');
+    this.autoridadImpositoraSeleccionada = true;
+    this.autoridadImpositora = {
+      rfc: 'PATO500101PAT',
+      numAutoridad: '12345',
+      razonSocial: 'Patito, S.A. de C.V.',
+      tipoPersona: 'Moral'};
     this.autoridad.rfc = 'PATO500101PAT';
     this.autoridad.numAutoridad = '12345';
     this.autoridad.razonSocial = 'Patito, S.A. de C.V.';
