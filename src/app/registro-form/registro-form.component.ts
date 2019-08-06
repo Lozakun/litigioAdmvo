@@ -1,11 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormsModule, NgForm, NgModel } from '@angular/forms';
-import { AdmonFormService } from '../shared/admon-form.service';
+import { Component, OnInit, ViewChild, Input, AfterViewInit } from '@angular/core';
+import { NgForm, NgModel } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { Proveedor } from '../shared/proveedor.model';
 import { Determinante } from '../shared/determinante.model';
 import { RegistroDemandaAdmon } from '../shared/registroDemandaAdmon.model';
+import { AdmonFormService } from '../shared/admon-form.service';
 
 @Component({
   selector: 'app-registro-form',
@@ -14,7 +14,7 @@ import { RegistroDemandaAdmon } from '../shared/registroDemandaAdmon.model';
 })
 export class RegistroFormComponent implements OnInit {
   @ViewChild('registroForm', {static: false}) regForm: NgForm;
-  @ViewChild('oficio', {static: false}) oficio: NgModel;
+  @ViewChild('oficio', {static: false}) oficioM: NgModel;
   @ViewChild('expediente', {static: false}) expediente: NgModel;
   @ViewChild('fechaNotificacion', {static: false}) fechaNotificacion: NgModel;
   @ViewChild('fechaDemanda', {static: false}) fechaDemanda: NgModel;
@@ -30,23 +30,45 @@ export class RegistroFormComponent implements OnInit {
   sociedades = ['Sociedad 1', 'Sociedad 2', 'Sociedad 3'];
   autoridad: Proveedor = {rfc: '', razonSocial: '', numAutoridad: '', tipoPersona: ''};
   determinante: Determinante = {numDeterminante: '', nombreDeterminante: '', formatoDeterminante: ''};
-  registroDemanda: RegistroDemandaAdmon;
+  @Input() registroDemanda: RegistroDemandaAdmon;
   folioDemanda: string;
   autoridadImpositoraSeleccionada = false;
+  oficio: string;
 
-  constructor(private admonFormService: AdmonFormService, private router: Router) { }
+  constructor(private admonFormService: AdmonFormService, private router: Router) {
+    this.admonFormService.registroAgregado.subscribe(
+      (registro: RegistroDemandaAdmon) => {
+        this.registroDemanda = registro;
+      }
+    );
+  }
 
   ngOnInit() {
+      this.registroDemanda = this.admonFormService.registro;
   }
 
   onRegistrar() {
-    console.log('Intento de Registro!');
-    if (this.autoridadImpositoraSeleccionada) {
-      this.folioDemanda = 'LA - ' + Math.floor(Math.random() * (999999 - 1) + 1);
-      this.registroDemanda = new RegistroDemandaAdmon(this.folioDemanda, this.oficio.value, this.expediente.value,
-      this.fechaNotificacion.value, this.autoridadImpositora, this.fechaDemanda.value, this.tipoDemanda.value,
-      this.participaTercero.value, this.motivoDemanda.value, this.sociedad.value, this.determinante,
-      this.participaWalmart.value, this.importeHistorico.value);
+    this.folioDemanda = 'LA - ' + Math.floor(Math.random() * (999999 - 1) + 1);
+    console.log('Intento de Registro! ' + this.folioDemanda);
+    if (this.autoridadImpositoraSeleccionada || this.registroDemanda.registroRealizado) {
+      this.registroDemanda = {
+        folioDemanda: this.folioDemanda,
+        oficio: this.oficioM.value,
+        expediente: this.expediente.value,
+        fechaNotificacion: this.fechaNotificacion.value,
+        autoridadImpositora: this.registroDemanda.autoridadImpositora,
+        fechaDemanda: this.fechaDemanda.value,
+        tipoDemanda: this.tipoDemanda.value,
+        participaTercero: this.participaTercero.value,
+        motivoDemanda: this.motivoDemanda.value,
+        sociedad: this.sociedad.value,
+        determinante: this.registroDemanda.determinante,
+        participaWalmart: this.participaWalmart.value,
+        importeHistorico: this.importeHistorico.value,
+        registroRealizado: true
+        };
+      // this.admonFormService.registrarDemanda(this.registroDemanda);
+      this.admonFormService.registroAgregado.emit(this.registroDemanda);
       console.log(this.registroDemanda);
       this.router.navigate(['litigioAdmvo', 'pae']);
     } else {
@@ -58,20 +80,20 @@ export class RegistroFormComponent implements OnInit {
   seleccionAutoridad() {
     console.log('seleccionando autoridad..');
     this.autoridadImpositoraSeleccionada = true;
-    this.autoridadImpositora = {
+    this.registroDemanda.autoridadImpositora = {
       rfc: 'PATO500101PAT',
       numAutoridad: '12345',
       razonSocial: 'Patito, S.A. de C.V.',
       tipoPersona: 'Moral'};
-    this.autoridad.rfc = 'PATO500101PAT';
-    this.autoridad.numAutoridad = '12345';
-    this.autoridad.razonSocial = 'Patito, S.A. de C.V.';
-    this.autoridad.tipoPersona = 'Moral';
+    this.registroDemanda.autoridadImpositora.rfc = 'PATO500101PAT';
+    this.registroDemanda.autoridadImpositora.numAutoridad = '12345';
+    this.registroDemanda.autoridadImpositora.razonSocial = 'Patito, S.A. de C.V.';
+    this.registroDemanda.autoridadImpositora.tipoPersona = 'Moral';
   }
 
   seleccionDeterminante() {
     console.log('seleccionando autoridad..');
-    this.determinante = {
+    this.registroDemanda.determinante = {
       numDeterminante: '09876',
       nombreDeterminante: 'Sams Universidad',
       formatoDeterminante: 'SAMS'

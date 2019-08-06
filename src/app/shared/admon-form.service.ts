@@ -1,12 +1,20 @@
 import { RegistroDemandaAdmon } from './registroDemandaAdmon.model';
+import { EventEmitter, Output } from '@angular/core';
 
 export class AdmonFormService {
-    registro: RegistroDemandaAdmon;
+    @Output() registro: RegistroDemandaAdmon;
+    registroAgregado = new EventEmitter<RegistroDemandaAdmon>();
 
-    // constructor() {
-    //     this.registro.folioDemanda = '';
-    //     this.registro.expediente = '';
-    //     this.registro.oficio = '';
-    //     this.registro.autoridadImpositora = {0, '', '', '',};
+    // registrarDemanda(demanda: RegistroDemandaAdmon) {
+    //     this.registro = new RegistroDemandaAdmon(demanda.folioDemanda, demanda.oficio, demanda.expediente,
+    //         demanda.fechaNotificacion, demanda.autoridadImpositora, demanda.fechaDemanda, demanda.tipoDemanda,
+    //         demanda.participaTercero, demanda.motivoDemanda, demanda.sociedad, demanda.determinante, demanda.participaWalmart,
+    //         demanda.importeHistorico);
     // }
+
+    obtenerRegistro() {
+        return this.registroAgregado;
+    }
+
+    // updateRegistro() {}
 }

@@ -16,6 +16,7 @@ export class RegistroDemandaAdmon {
         public sociedad: string,
         public determinante: Determinante,
         public participaWalmart: number,
-        public importeHistorico: number
+        public importeHistorico: number,
+        public registroRealizado: boolean
     ) { }
 }

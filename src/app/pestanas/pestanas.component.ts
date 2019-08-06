@@ -5,8 +5,7 @@ import { AdmonFormService } from '../shared/admon-form.service';
 @Component({
   selector: 'app-pestanas',
   templateUrl: './pestanas.component.html',
-  styleUrls: ['./pestanas.component.css'],
-  providers: [AdmonFormService]
+  styleUrls: ['./pestanas.component.css']
 })
 export class PestanasComponent implements OnInit {
 
@@ -15,6 +14,7 @@ export class PestanasComponent implements OnInit {
   constructor(private admonFormService: AdmonFormService) { }
 
   ngOnInit() {
+    this.registroDemanda = this.admonFormService.registro;
   }
 
 }
