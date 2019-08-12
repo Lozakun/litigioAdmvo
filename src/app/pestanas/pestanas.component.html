@@ -2,19 +2,19 @@
     <div class="col-12">    
        <ul class="btn-group btn-group-lg">
             <li>
-                <a class="btn btn-primary" routerLink="/litigioAdmvo/registro">1. Registro Demanda</a>
+                <a class="btn btn-primary" routerLink="/litigioAdmvo/registro" routerLinkActive="active">1. Registro Demanda</a>
             </li>
             <li>
-                <a class="btn btn-primary" routerLink="/litigioAdmvo/pae">2. PAE</a>
+                <a class="btn btn-primary" routerLink="/litigioAdmvo/pae" routerLinkActive="active" [ngClass]="{disabled: !validaInactivo('registroDemanda')}">2. PAE</a>
             </li>
             <li>
-                <a class="btn btn-primary" routerLink="/litigioAdmvo/despacho">3. Selección Despacho</a>
+                <a class="btn btn-primary" routerLink="/litigioAdmvo/despacho" routerLinkActive="active" [ngClass]="{disabled: !validaInactivo('registroPae')}">3. Selección Despacho</a>
             </li>
             <li>
-                <a class="btn btn-primary" routerLink="litigioAdmvo/audiencia">4. Audiencia y/o Suspensión</a>
+                <a class="btn btn-primary" routerLink="litigioAdmvo/audiencia" routerLinkActive="active" [ngClass]="{disabled: !validaInactivo()}">4. Audiencia y/o Suspensión</a>
             </li>
             <li>
-                <a class="btn btn-primary" routerLink="litigioAdmvo/resolucion">5. Resolución Final</a>
+                <a class="btn btn-primary" routerLink="litigioAdmvo/resolucion" routerLinkActive="active" [ngClass]="{disabled: !validaInactivo()}">5. Resolución Final</a>
             </li>
         </ul>
     </div>

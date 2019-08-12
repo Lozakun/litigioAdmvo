@@ -11,10 +11,21 @@ export class PestanasComponent implements OnInit {
 
   registroDemanda: RegistroDemandaAdmon;
 
-  constructor(private admonFormService: AdmonFormService) { }
+  constructor(private admonFormService: AdmonFormService) {}
 
   ngOnInit() {
-    this.registroDemanda = this.admonFormService.registro;
+    this.admonFormService.registroAgregado.subscribe((registro: RegistroDemandaAdmon) => {
+      this.registroDemanda = registro;
+      this.admonFormService.registro = registro;
+    });
   }
 
+  validaInactivo(pestana: string) {
+    switch (pestana) {
+      case 'registroDemanda':
+        return this.admonFormService.registro.registroRealizado;
+      case 'registroPae':
+        return this.admonFormService.registro.registroPae;
+    }
+  }
 }

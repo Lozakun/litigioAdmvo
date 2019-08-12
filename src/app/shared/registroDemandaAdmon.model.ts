@@ -17,6 +17,17 @@ export class RegistroDemandaAdmon {
         public determinante: Determinante,
         public participaWalmart: number,
         public importeHistorico: number,
-        public registroRealizado: boolean
+        public registroRealizado: boolean,
+        public registroPae: boolean,
+        public paeChecked: boolean,
+        public clausura: boolean,
+        public embargo: boolean,
+        public fechaEmbargo: Date,
+        public cancelaEmbargo: boolean,
+        public solRetiroEmbargo: boolean,
+        public remocionDepositaria: boolean,
+        public pagado: boolean,
+        public garantizado: boolean,
+        // public bienesEmbargados: []
     ) { }
 }

@@ -36,7 +36,8 @@ export class AppComponent implements OnInit {
       razonSocial: '',
       tipoPersona: ''
     }, null, null, null, '', '', {numDeterminante: null, nombreDeterminante: '',
-      formatoDeterminante: ''}, null, null, false);
+      formatoDeterminante: ''}, null, null, false, false, false, false, false, null,
+      false, false, false, false, false);
     this.registroDemanda = this.admonService.registro;
     console.log(this.registroDemanda);
     this.folioDemanda = this.registroDemanda.folioDemanda;

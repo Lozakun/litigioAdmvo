@@ -13,6 +13,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { AdmonFormService } from './shared/admon-form.service';
+import { AuthGuard } from './shared/auth-guard.service';
+import { AuthService } from './shared/auth.service';
 
 @NgModule({
   declarations: [
@@ -29,10 +31,9 @@ import { AdmonFormService } from './shared/admon-form.service';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    AppRoutingModule,
     FormsModule
   ],
-  providers: [AdmonFormService],
+  providers: [AdmonFormService, AuthGuard, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

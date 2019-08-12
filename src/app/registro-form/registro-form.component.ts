@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { NgForm, NgModel } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -45,6 +45,7 @@ export class RegistroFormComponent implements OnInit {
 
   ngOnInit() {
       this.registroDemanda = this.admonFormService.registro;
+
   }
 
   onRegistrar() {
@@ -65,7 +66,17 @@ export class RegistroFormComponent implements OnInit {
         determinante: this.registroDemanda.determinante,
         participaWalmart: this.participaWalmart.value,
         importeHistorico: this.importeHistorico.value,
-        registroRealizado: true
+        registroRealizado: true,
+        registroPae: false,
+        paeChecked: false,
+        clausura: false,
+        embargo: false,
+        fechaEmbargo: null,
+        cancelaEmbargo: false,
+        solRetiroEmbargo: false,
+        remocionDepositaria: false,
+        pagado: false,
+        garantizado: false
         };
       // this.admonFormService.registrarDemanda(this.registroDemanda);
       this.admonFormService.registroAgregado.emit(this.registroDemanda);

@@ -22,6 +22,16 @@
     .col-12 {
         padding: 0;
     }
+    
+    .btn.btn-primary.active {
+        background-color: #FDBB30;
+        border-color: #FDBB30;
+    }
+
+    .btn.btn-primary.disabled{
+        background-color: gray;
+        border-color: gray;
+    }
 }
 
 @media (min-width: 576px) { 
@@ -47,5 +57,14 @@
     }
     .col-12 {
         padding: 0;
+    }
+
+    .btn.btn-primary.active {
+        background-color: #FDBB30;
+        border-color: #FDBB30;
+    }
+    .btn.btn-primary.disabled{
+        background-color:#A4A4A4;;
+        border-color: #A4A4A4;
     }
 }

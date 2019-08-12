@@ -7,15 +7,16 @@ import { AudienciaFormComponent } from './audiencia-form/audiencia-form.componen
 import { ResolucionFormComponent } from './resolucion-form/resolucion-form.component';
 import { PestanasComponent } from './pestanas/pestanas.component';
 import { RegistroFormComponent } from './registro-form/registro-form.component';
+import { AuthGuard } from './shared/auth-guard.service';
 
 const appRoutes: Routes = [
     {path: '', component: RegistroFormComponent},
      {path: 'litigioAdmvo', children: [
         {path: 'registro', component: RegistroFormComponent},
-        {path: 'pae', component: PaeFormComponent},
-        {path: 'despacho', component: DespachoFormComponent},
-        {path: 'audiencia', component: AudienciaFormComponent},
-        {path: 'resolucion', component: ResolucionFormComponent}
+        {path: 'pae', canActivate: [AuthGuard], component: PaeFormComponent},
+        {path: 'despacho', canActivate: [AuthGuard], component: DespachoFormComponent},
+        {path: 'audiencia', canActivate: [AuthGuard], component: AudienciaFormComponent},
+        {path: 'resolucion', canActivate: [AuthGuard], component: ResolucionFormComponent}
     ]}
 ];
 
