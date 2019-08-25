@@ -45,40 +45,27 @@ export class RegistroFormComponent implements OnInit {
 
   ngOnInit() {
       this.registroDemanda = this.admonFormService.registro;
-
   }
 
   onRegistrar() {
     this.folioDemanda = 'LA - ' + Math.floor(Math.random() * (999999 - 1) + 1);
     console.log('Intento de Registro! ' + this.folioDemanda);
     if (this.autoridadImpositoraSeleccionada || this.registroDemanda.registroRealizado) {
-      this.registroDemanda = {
-        folioDemanda: this.folioDemanda,
-        oficio: this.oficioM.value,
-        expediente: this.expediente.value,
-        fechaNotificacion: this.fechaNotificacion.value,
-        autoridadImpositora: this.registroDemanda.autoridadImpositora,
-        fechaDemanda: this.fechaDemanda.value,
-        tipoDemanda: this.tipoDemanda.value,
-        participaTercero: this.participaTercero.value,
-        motivoDemanda: this.motivoDemanda.value,
-        sociedad: this.sociedad.value,
-        determinante: this.registroDemanda.determinante,
-        participaWalmart: this.participaWalmart.value,
-        importeHistorico: this.importeHistorico.value,
-        registroRealizado: true,
-        registroPae: false,
-        paeChecked: false,
-        clausura: false,
-        embargo: false,
-        fechaEmbargo: null,
-        cancelaEmbargo: false,
-        solRetiroEmbargo: false,
-        remocionDepositaria: false,
-        pagado: false,
-        garantizado: false
-        };
-      // this.admonFormService.registrarDemanda(this.registroDemanda);
+      this.registroDemanda.folioDemanda = this.folioDemanda;
+      this.registroDemanda.oficio = this.oficioM.value;
+      this.registroDemanda.expediente = this.expediente.value;
+      this.registroDemanda.fechaNotificacion = this.fechaNotificacion.value;
+      this.registroDemanda.autoridadImpositora = this.registroDemanda.autoridadImpositora;
+      this.registroDemanda.fechaDemanda = this.fechaDemanda.value;
+      this.registroDemanda.tipoDemanda = this.tipoDemanda.value;
+      this.registroDemanda.participaTercero = this.participaTercero.value;
+      this.registroDemanda.motivoDemanda = this.motivoDemanda.value;
+      this.registroDemanda.sociedad = this.sociedad.value;
+      this.registroDemanda.determinante = this.registroDemanda.determinante;
+      this.registroDemanda.participaWalmart = this.participaWalmart.value;
+      this.registroDemanda.importeHistorico = this.importeHistorico.value;
+      this.registroDemanda.registroRealizado = true;
+
       this.admonFormService.registroAgregado.emit(this.registroDemanda);
       console.log(this.registroDemanda);
       this.router.navigate(['litigioAdmvo', 'pae']);

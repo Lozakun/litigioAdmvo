@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 
 import { AdmonFormService } from './shared/admon-form.service';
 import { RegistroDemandaAdmon } from './shared/registroDemandaAdmon.model';
+import { DespachoService } from './shared/despacho.service';
 
 @Component({
   selector: 'app-root',
@@ -19,7 +20,7 @@ export class AppComponent implements OnInit {
               'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
   fechaYear: string;
 
-  constructor(private admonService: AdmonFormService) {
+  constructor(private admonService: AdmonFormService, private despachos: DespachoService) {
     this.admonService.registroAgregado.subscribe(
       (registro: RegistroDemandaAdmon) => {
         this.registroDemanda = registro;
@@ -36,8 +37,8 @@ export class AppComponent implements OnInit {
       razonSocial: '',
       tipoPersona: ''
     }, null, null, null, '', '', {numDeterminante: null, nombreDeterminante: '',
-      formatoDeterminante: ''}, null, null, false, false, false, false, false, null,
-      false, false, false, false, false);
+      formatoDeterminante: ''}, null, null, false, false, false, false, false, null, null,
+      false, false, false, false, false, [], null, null, [null], false);
     this.registroDemanda = this.admonService.registro;
     console.log(this.registroDemanda);
     this.folioDemanda = this.registroDemanda.folioDemanda;

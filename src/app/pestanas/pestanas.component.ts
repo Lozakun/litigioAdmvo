@@ -26,6 +26,8 @@ export class PestanasComponent implements OnInit {
         return this.admonFormService.registro.registroRealizado;
       case 'registroPae':
         return this.admonFormService.registro.registroPae;
+      case 'registroDespacho':
+        return this.admonFormService.registro.registroDespacho;
     }
   }
 }

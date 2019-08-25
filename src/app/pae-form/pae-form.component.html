@@ -1,4 +1,4 @@
-<form  #paeForm="ngForm" (ngSubmit)="avanzaPAE(paeForm.value)">
+<form  #paeForm="ngForm" (ngSubmit)="avanzaPAE()">
     <div class="row">
         <div class="col-md-6">
             <div class="col-md-12 border-bottom">
@@ -48,7 +48,8 @@
                                 id="embargo"
                                 class="form-control"
                                 [disabled]=!registroDemanda.paeChecked
-                                [(ngModel)]="registroDemanda.embargo">
+                                [(ngModel)]="registroDemanda.embargo"
+                                #embargo="ngModel">
                                 <label class="checkLabel">Sí</label>
                             </div>
                 </div>
@@ -61,8 +62,9 @@
                                 name="tipoEmbargo" 
                                 id="tipoEmbargo"
                                 class="form-control"
-                                [ngModel]="registroDemanda.embargo"
+                                [ngModel]="registroDemanda.tipoEmbargo"
                                 [disabled]=!registroDemanda.embargo
+                                #tipoEmbargo="ngModel"
                                 >
                                     <option 
                                     *ngFor="let tipoEmbargo of tiposEmbargo"
@@ -82,6 +84,7 @@
                                 name="fechaEmbargo"
                                 [ngModel]="registroDemanda.fechaEmbargo"
                                 [disabled]=!registroDemanda.embargo
+                                #fechaEmbargo="ngModel"
                                 >
                             </div>
                 </div>
@@ -96,7 +99,8 @@
                                 name="cancelaEmbargo"
                                 class="form-control"
                                 [ngModel]="registroDemanda.cancelaEmbargo"
-                                [disabled]=!registroDemanda.embargo>
+                                [disabled]=!registroDemanda.embargo
+                                #cancelaEmbargo="ngModel">
                                 <label class="checkLabel">Sí</label>
                             </div>
                 </div>
@@ -111,7 +115,8 @@
                                 id="solRetiroEmbargo"
                                 class="form-control"
                                 [ngModel]="registroDemanda.solRetiroEmbargo"
-                                [disabled]=!registroDemanda.embargo>
+                                [disabled]=!registroDemanda.embargo
+                                #solRetiroEmbargo="ngModel">
                                 <label class="checkLabel">Sí</label>
                             </div>
                 </div>
@@ -126,7 +131,8 @@
                                 name="remocionDepositaria"
                                 class="form-control"
                                 [ngModel]="registroDemanda.remocionDepositaria"
-                                [disabled]="!registroDemanda.paeChecked">
+                                [disabled]="!registroDemanda.paeChecked"
+                                #remocionDepositaria="ngModel" >
                                 <label class="checkLabel">Sí</label>
                             </div>
                 </div>
@@ -141,7 +147,8 @@
                                 name="pagado"
                                 class="form-control"
                                 [ngModel]="registroDemanda.pagado"
-                                [disabled]="!registroDemanda.paeChecked">
+                                [disabled]="!registroDemanda.paeChecked"
+                                #pagado="ngModel">
                                 <label class="checkLabel">Sí</label>
                             </div>
                 </div>
@@ -156,7 +163,8 @@
                                 id="garantizado"
                                 class="form-control"
                                 [ngModel]="registroDemanda.garantizado"
-                                [disabled]="!registroDemanda.paeChecked">
+                                [disabled]="!registroDemanda.paeChecked"
+                                #garantizado="ngModel">
                                 <label class="checkLabel">Sí</label>
                             </div>
                 </div>
@@ -171,22 +179,39 @@
             </div>
             <div class="col-md-12">
                 <div class="form-group form-row">
-                    <div class="col-9">
+                    <div class="col-3">
+                        <input 
+                        style="margin-left: 5px;"
+                        type="text"
+                        id="cantBien"
+                        name="cantBien"
+                        class="form-control"
+                        ngModel
+                        #cantBien="ngModel">
+                    </div>
+                    <div class="col-6">
                         <input 
                         type="text"
-                        id="bienEmbargado"
-                        name="bienEmbargado"
+                        style="margin-left: 5px;"
+                        id="descBien"
+                        name="descBien"
                         class="form-control"
-                        ngModel>
+                        ngModel
+                        #descBien="ngModel">
                     </div>
                     <div class="col-3">
-                        <button type="button" class="btn btn-warning">Agregar</button>
+                        <button 
+                        type="button" 
+                        style="margin-left: 5px;"
+                        (click)="agregarBien(cantBien, descBien)" 
+                        [disabled]="(!descBien.valid && descBien.touched) && (!cantBien.valid && descBien.touched)"
+                        class="btn btn-warning">Agregar</button>
                     </div>
                 </div>
             </div>
             <div class="col-md-12 form-inline">
                 <div class="col-2">
-                    <label>Id</label>
+                    <label>Cant.</label>
                 </div>
                 <div class="col-7">
                     <label>Descripción del Bien</label>
@@ -195,10 +220,14 @@
             </div>
             <div class="col-md-12">
                 <ul class="list-group">
-                    <li class="list-group-item">
-                        <label class="col-2">1</label>
-                        <label class="col-7">Bien</label>
-                        <button type="button" class="btn btn-sm btn-danger col-3">Eliminar</button>
+                    <li class="list-group-item" *ngFor="let bien of registroDemanda.bienesEmbargados; let i = index">
+                        <label class="col-2">{{ bien.cantidad }}</label>
+                        <label class="col-7">{{ bien.descripcion }}</label>
+                        <button 
+                        type="button" 
+                        (click)="eliminarBien(i)"
+                        class="btn btn-sm btn-danger col-3">
+                        Eliminar</button>
                     </li>
                 </ul>
             </div>
@@ -216,7 +245,8 @@
                     <button 
                     class="btn btn-warning btn-continuar" 
                     type="submit"
-                    [disabled]="(!paeForm.valid && paeForm.untouched)">Siguiente</button>
+                    [disabled]="(!paeForm.valid && paeForm.untouched)"
+                    (click)="guardarPAE()">Siguiente</button>
                 </div>
             </div>
         </div>

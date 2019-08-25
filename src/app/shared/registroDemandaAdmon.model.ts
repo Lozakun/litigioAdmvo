@@ -1,5 +1,6 @@
 import { Proveedor } from './proveedor.model';
 import { Determinante } from './determinante.model';
+import { Abogado } from './abogados.model';
 
 export class RegistroDemandaAdmon {
 
@@ -22,12 +23,17 @@ export class RegistroDemandaAdmon {
         public paeChecked: boolean,
         public clausura: boolean,
         public embargo: boolean,
+        public tipoEmbargo: string,
         public fechaEmbargo: Date,
         public cancelaEmbargo: boolean,
         public solRetiroEmbargo: boolean,
         public remocionDepositaria: boolean,
         public pagado: boolean,
         public garantizado: boolean,
-        // public bienesEmbargados: []
+        public bienesEmbargados = [],
+        public autoridadMateria: string,
+        public despacho: string,
+        public abogados: Abogado[],
+        public registroDespacho: boolean
     ) { }
 }

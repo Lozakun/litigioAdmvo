@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { PestanasComponent } from './pestanas/pestanas.component';
@@ -15,6 +15,7 @@ import { FooterComponent } from './footer/footer.component';
 import { AdmonFormService } from './shared/admon-form.service';
 import { AuthGuard } from './shared/auth-guard.service';
 import { AuthService } from './shared/auth.service';
+import { DespachoService } from './shared/despacho.service';
 
 @NgModule({
   declarations: [
@@ -31,9 +32,10 @@ import { AuthService } from './shared/auth.service';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
-  providers: [AdmonFormService, AuthGuard, AuthService],
+  providers: [AdmonFormService, AuthGuard, AuthService, DespachoService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

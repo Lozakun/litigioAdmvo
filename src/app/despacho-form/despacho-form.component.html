@@ -1,4 +1,4 @@
-<form>
+<form [formGroup]="despachoForm" (ngSubmit)="guardarDespacho()">
     <div class="row">
         <div class="col-md-6">
             <div class="col-md-12 border-bottom">
@@ -14,7 +14,8 @@
                         name="autoridadMateria" 
                         id="autoridadMateria"
                         class="form-control"
-                        ngModel>
+                        formControlName="autoridadMat"
+                        >
                             <option 
                             *ngFor="let autoridadMateria of autoridadesMaterias"
                             value="autoridadMateria">{{ autoridadMateria }}</option>
@@ -30,10 +31,11 @@
                         name="despacho" 
                         id="despacho"
                         class="form-control"
-                        ngModel>
+                        formControlName="despachoControl"
+                        (change)="asignaDespacho()">
                             <option 
-                            *ngFor="let despacho of despachos"
-                            value="despacho">{{ despacho }}</option>
+                            *ngFor="let despacho of despachos; let i = index"
+                            [value]="despacho.nombreDespacho">{{ despacho.nombreDespacho }}</option>
                         </select>
                     </div>
                 </div>
@@ -45,22 +47,16 @@
                     </div>
                     <div class="row col-md-12">
                         <div class="col-md-12">
-                            <ul class="list-group">
-                                <li class="list-group-item">
-                                    <label class="inlineAbogados col-11" for="nombreAbogado"><input 
+                            <ul class="list-group" formArrayName="abogados">
+                                    <li *ngFor="let abogado of getAbogadosControls();let i = index"
+                                    class="list-group-item" 
+                                    [formGroupName]="i">
+                                        <label class="inlineAbogados col-11" for="nombreAbogado"><input 
                                         type="checkbox"
-                                        name="nombreAbogado"
                                         id="nombreAbogado"
                                         class="inlineAbogados form-control col-1"
-                                        ngModel>Juana Rodríguez</label>
-                                </li>
-                                <li class="list-group-item">
-                                        <label class="inlineAbogados col-11" for="nombreAbogado"><input 
-                                            type="checkbox"
-                                            name="nombreAbogado"
-                                            id="nombreAbogado"
-                                            class="inlineAbogados form-control col-1"
-                                            ngModel>Fernando Acosta</label>
+                                        formControlName="selectorAbogado"
+                                        >{{ abogados[i].nombre }}</label>
                                     </li>
                             </ul>
                         </div>
@@ -74,9 +70,11 @@
                 <div class="btn-group">
                     <button 
                     class="btn btn-outline-dark btn-continuar" 
-                    type="button">Anterior</button>
-                    <button class="btn btn-warning btn-continuar"
-                    type="submit">Siguiente</button>
+                    type="button" (click)="pestanaAnt()">Anterior</button>
+                    <button 
+                    class="btn btn-warning btn-continuar"
+                    type="submit" 
+                    [disabled]="!despachoForm.valid">Siguiente</button>
                 </div>
             </div>
         </div>
