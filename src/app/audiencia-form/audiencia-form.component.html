@@ -254,7 +254,7 @@
               </button>
             </div>
             <div class="modal-body">
-              <form>
+              <form [formGroup]="registroAudiencia" (ngSubmit)="addAudiencia()">
                 <div class="form-group form-inline">
                   <label for="fechaAudiencia" class="col-4 col-form-label">Fecha:</label>
                   <input type="date" class="col-8 form-control" id="fechaAudiencia">

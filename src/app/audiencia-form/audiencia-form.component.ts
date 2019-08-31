@@ -32,6 +32,7 @@ export class AudienciaFormComponent implements OnInit {
   EtapasProcesales = ['Revisión', 'Apelación', 'Recurso', 'Amparo'];
 
   audienciaForm: FormGroup;
+  registroAudiencia: FormGroup;
   registroDemanda: RegistroDemandaAdmon;
 
   constructor(private admonFormService: AdmonFormService) { }
@@ -97,13 +98,6 @@ export class AudienciaFormComponent implements OnInit {
   }
 
   validaSentencia(control: FormControl, estado: number) {
-    // if (this.registroDemanda.sentenciaTFJFA != null) {
-    //   this.audienciaForm.controls.sentenciaTFJFA.disable();
-    // }
-    console.log(control);
-    // switch (registroDemanda != null) {
-    //   case
-    // }
     if (control.value === null && estado === this.estadoSentencia) {
       control.enable();
     } else if (control.value !== null && estado === this.estadoSentencia) {
@@ -112,6 +106,11 @@ export class AudienciaFormComponent implements OnInit {
     } else {
       control.disable();
     }
+  }
+
+  addAudiencia() {
+    console.log(this.registroAudiencia);
+    //agregar control para que funcione la forma
   }
 
 
