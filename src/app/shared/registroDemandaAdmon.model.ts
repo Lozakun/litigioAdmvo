@@ -34,6 +34,12 @@ export class RegistroDemandaAdmon {
         public autoridadMateria: string,
         public despacho: string,
         public abogados: Abogado[],
-        public registroDespacho: boolean
+        public registroDespacho: boolean,
+        public fechaSuspension: Date,
+        public resolucionSuspension: string,
+        public sentenciaTFJFA: string,
+        public sentenciaDefinitiva: string,
+        public resultadoFinal: string,
+        public estadoFinal: string
     ) { }
 }

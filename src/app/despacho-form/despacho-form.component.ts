@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, EventEmitter } from '@angular/core';
 import { AdmonFormService } from '../shared/admon-form.service';
 import { FormGroup, FormControl, FormArray, Form, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
+import { ModalDirective } from '../../../node_modules/bootstrap/dist/js/bootstrap.min.js';
 
 import { RegistroDemandaAdmon } from '../shared/registroDemandaAdmon.model';
 import { Despacho } from '../shared/despachos.model';
@@ -18,9 +19,10 @@ export class DespachoFormComponent implements OnInit {
   // @ViewChild('autoridadMateria', {static: false}) autoridadMateria: NgModel;
   // @ViewChild('despacho', {static: false}) despacho: NgModel;
   // @ViewChild('abogado', {static: false}) abogado: NgModel;
+  @ViewChild('advertenciaAbogado', {static: false}) advertenciaAboModal: ModalDirective;
   despachoForm: FormGroup;
-  abogadosArray = new FormArray([]);
-
+  abogadosArray = new FormArray([], this.validaAbogados.bind(this));
+  countAbogados = 0;
   autoridadesMaterias = ['Secretaria del Trabajo'];
   autoridadMat: FormControl;
   registroDemanda: RegistroDemandaAdmon;
@@ -44,6 +46,10 @@ export class DespachoFormComponent implements OnInit {
             selectorAbogado: new FormControl(abogadoControl.selec)
           })
         );
+        if (abogadoControl.selec) {
+          this.countAbogados++;
+          console.log(this.countAbogados);
+        }
       }
     }
     this.initForm();
@@ -63,9 +69,10 @@ export class DespachoFormComponent implements OnInit {
     });
   }
   guardarDespacho() {
-    // let count = 0;
     for (let i = 0; i < this.abogados.length; i++ ) {
-      console.log(this.despachoForm.get('abogados').value[i]);
+      if (this.despachoForm.get('abogados').value[i].selectorAbogado) {
+        this.countAbogados++;
+      }
       this.abogados[i].selec = this.despachoForm.get('abogados').value[i].selectorAbogado;
     }
     // Agregar una validación para que grabe solo cuando por lo menos haya un abogado seleccionado.
@@ -73,16 +80,17 @@ export class DespachoFormComponent implements OnInit {
     //   if (this.abogados[i].selec) ? count++;
     // }
 
-    // if (count > 0) {
-    this.registroDemanda.autoridadMateria = this.despachoForm.get('autoridadMat').value;
-    this.registroDemanda.despacho = this.despachoForm.get('despachoControl').value;
-    this.registroDemanda.abogados = this.abogados;
-    this.registroDemanda.registroDespacho = true;
-    console.log(this.registroDemanda);
-    this.router.navigate(['../', 'audiencia'], {relativeTo: this.route});
-    // } else {
-
-    // }
+    if (this.countAbogados > 0) {
+      console.log(this.despachoForm.get('autoridadMat').value);
+      this.registroDemanda.autoridadMateria = this.despachoForm.get('autoridadMat').value;
+      this.registroDemanda.despacho = this.despachoForm.get('despachoControl').value;
+      this.registroDemanda.abogados = this.abogados;
+      this.registroDemanda.registroDespacho = true;
+      console.log(this.registroDemanda);
+      this.router.navigate(['../', 'audiencia'], {relativeTo: this.route});
+    } else {
+      console.log('No debería estar aqui');
+    }
   }
 
   asignaDespacho() {
@@ -106,6 +114,20 @@ export class DespachoFormComponent implements OnInit {
 
   pestanaAnt() {
     this.router.navigate(['../', 'pae'], {relativeTo: this.route});
+  }
+
+  validaAbogados(controls: FormArray): {[s: string]: boolean} {
+    for (const control of controls.controls) {
+      if (control.value.selectorAbogado) {
+        this.countAbogados++;
+      }
+    }
+    if (this.countAbogados === 0) {
+      return {sinAbogados: true};
+    } else {
+      this.countAbogados = 0;
+      return null;
+    }
   }
 
 }

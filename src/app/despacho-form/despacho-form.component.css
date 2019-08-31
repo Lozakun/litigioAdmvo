@@ -46,4 +46,11 @@
         padding-left: 0px;
     }
 
+    input.ng-invalid.ng-touched, select.ng-invalid.ng-touched {
+        border: 1px solid red;
+    }
+
+    small.form-text.text-muted {
+        color: red!important;
+    }
 

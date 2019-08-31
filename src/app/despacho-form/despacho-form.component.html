@@ -18,8 +18,12 @@
                         >
                             <option 
                             *ngFor="let autoridadMateria of autoridadesMaterias"
-                            value="autoridadMateria">{{ autoridadMateria }}</option>
+                            [value]="autoridadMateria">{{ autoridadMateria }}</option>
                         </select>
+                        <small 
+                        *ngIf="!despachoForm.get('autoridadMat').valid && despachoForm.get('autoridadMat').touched" 
+                        class="form-text text-muted">
+                        Debes seleccionar una Autoridad/Materia!</small>
                     </div>
                 </div>
                 <div class="form-group form-row">
@@ -37,6 +41,10 @@
                             *ngFor="let despacho of despachos; let i = index"
                             [value]="despacho.nombreDespacho">{{ despacho.nombreDespacho }}</option>
                         </select>
+                        <small 
+                        *ngIf="!despachoForm.get('despachoControl').valid && despachoForm.get('despachoControl').touched" 
+                        class="form-text text-muted">
+                        Debes seleccionar un Despacho!</small>
                     </div>
                 </div>
             </div>
@@ -59,7 +67,11 @@
                                         >{{ abogados[i].nombre }}</label>
                                     </li>
                             </ul>
-                        </div>
+                            <small 
+                            *ngIf="!abogadosArray.valid && abogadosArray.touched"
+                            class="form-text text-muted">
+                            Debes seleccionar al menos un Abogado!</small>
+                            </div>
                     </div>
         </div>
     </div>
@@ -80,3 +92,28 @@
         </div>
     </div>
 </form>
+
+<div class="modal fade"
+#advertenciaAbogado
+id="advertenciaAbogado" 
+tabindex="-1" 
+role="dialog" 
+aria-labelledby="advertenciaAbogadoModalLabel" 
+aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Advertencia</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Debes seleccionar al menos un Abogado!!</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
