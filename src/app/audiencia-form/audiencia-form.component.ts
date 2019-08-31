@@ -22,6 +22,7 @@ export class AudienciaFormComponent implements OnInit {
   pago: string;
   fianza: string;
   embargo: string;
+  estadoSentencia = 0;
   resoluciones = ['Concedida'];
   horas = ['0', '1', '2', '3', '4', '5', '6', '7', '8',
   '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19' , '20', '21', '22', '23' ];
@@ -58,10 +59,20 @@ export class AudienciaFormComponent implements OnInit {
       resultadoFinal: new FormControl({value: this.registroDemanda.resultadoFinal, disabled: true}),
       estadoFinal: new FormControl({value: this.registroDemanda.estadoFinal, disabled: true})
     });
-    this.validaSentencia(this.audienciaForm.get('sentenciaTFJFA') as FormControl);
-    this.validaSentencia(this.audienciaForm.get('sentenciaDefinitiva') as FormControl);
-    this.validaSentencia(this.audienciaForm.get('resultadoFinal') as FormControl);
-    this.validaSentencia(this.audienciaForm.get('estadoFinal') as FormControl);
+    // this.validaSentencia(this.audienciaForm.get('sentenciaTFJFA') as FormControl);
+    const TFJFA = this.audienciaForm.get('sentenciaTFJFA') as FormControl;
+    if (TFJFA.value !== null) {
+      TFJFA.disable();
+    }
+    const sentDefinitiva = this.audienciaForm.get('sentenciaDefinitiva') as FormControl;
+    console.log(this.audienciaForm.get('sentenciaTFJFA').disabled);
+    console.log(sentDefinitiva.value === null);
+    if (this.audienciaForm.get('sentenciaTFJFA').disabled && sentDefinitiva.value === null) {
+      sentDefinitiva.enable();
+    }
+    // this.validaSentencia(this.audienciaForm.get('sentenciaDefinitiva') as FormControl);
+    // this.validaSentencia(this.audienciaForm.get('resultadoFinal') as FormControl);
+    // this.validaSentencia(this.audienciaForm.get('estadoFinal') as FormControl);
     // if()
     // this.audienciaForm.controls.sentenciaTFJFA.disable;
   }
@@ -76,27 +87,30 @@ export class AudienciaFormComponent implements OnInit {
     this.admonFormService.registroAgregado.subscribe(registro => {
       this.registroDemanda = registro;
     });
-    this.validaSentencia(this.audienciaForm.get('sentenciaTFJFA') as FormControl);
-    this.validaSentencia(this.audienciaForm.get('sentenciaDefinitiva') as FormControl);
-    this.validaSentencia(this.audienciaForm.get('resultadoFinal') as FormControl);
-    this.validaSentencia(this.audienciaForm.get('estadoFinal') as FormControl);
+    this.validaSentencia(this.audienciaForm.get('sentenciaTFJFA') as FormControl, 0);
+    this.validaSentencia(this.audienciaForm.get('sentenciaDefinitiva') as FormControl, 1);
+    this.validaSentencia(this.audienciaForm.get('resultadoFinal') as FormControl, 2);
+    this.validaSentencia(this.audienciaForm.get('estadoFinal') as FormControl, 3);
     console.log(this.registroDemanda);
     console.log(this.registroDemanda.sentenciaTFJFA != null);
     console.log(this.audienciaForm);
   }
 
-  validaSentencia(control: FormControl) {
+  validaSentencia(control: FormControl, estado: number) {
     // if (this.registroDemanda.sentenciaTFJFA != null) {
     //   this.audienciaForm.controls.sentenciaTFJFA.disable();
     // }
     console.log(control);
     // switch (registroDemanda != null) {
-    //   case 
+    //   case
     // }
-    if (control.value != null) {
+    if (control.value === null && estado === this.estadoSentencia) {
+      control.enable();
+    } else if (control.value !== null && estado === this.estadoSentencia) {
       control.disable();
+      this.estadoSentencia++;
     } else {
-      return false;
+      control.disable();
     }
   }
 
