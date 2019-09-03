@@ -213,7 +213,8 @@
             class="btn btn-primary"
             type="button"
             data-toggle="modal"
-            data-target="#audienciaModal">Agregar Audiencia</button>
+            data-target="#audienciaModal"
+            >Agregar Audiencia</button>
         </div>
     </div>
     <div class="row">
@@ -221,22 +222,24 @@
             <div class="table-responsive">
                 <table class="table table-hover">
                     <thead>
-                        <th>Opciones</th>
-                        <th>Tribunal o Juzgado</th>
-                        <th>Fecha de Audiencia</th>
-                        <th>Hora</th>
-                        <th>Estado</th>
-                        <th>Factibilidad</th>
-                        <th>Etapa Procesal</th>
+                            <th>Opciones</th>
+                            <th>Tribunal o Juzgado</th>
+                            <th>Fecha de Audiencia</th>
+                            <th>Hora</th>
+                            <th>Estado</th>
+                            <th>Factibilidad</th>
+                            <th>Etapa Procesal</th>
                     </thead>
                     <tbody>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <tr *ngFor="let audiencia of registroDemanda.audiencias">
+                            <td></td>
+                            <td>{{ audiencia.tribunalJuzgado }}</td>
+                            <td>{{ audiencia.fecha }}</td>
+                            <td>{{ audiencia.hora }}:{{ audiencia.minutos }}</td>
+                            <td>{{ audiencia.estado }}</td>
+                            <td>{{ audiencia.factibilidad }}</td>
+                            <td>{{ audiencia.etapaProcesal }}</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -257,14 +260,19 @@
               <form [formGroup]="registroAudiencia" (ngSubmit)="addAudiencia()">
                 <div class="form-group form-inline">
                   <label for="fechaAudiencia" class="col-4 col-form-label">Fecha:</label>
-                  <input type="date" class="col-8 form-control" id="fechaAudiencia">
+                  <input 
+                  type="date" 
+                  class="col-8 form-control" 
+                  id="fechaAudiencia"
+                  formControlName="fechaAudiencia">
                 </div>
                 <div class="form-group form-inline">
                     <label for="horaAudiencia" class="col-4 col-form-label">Hora:</label>
                     <select 
                     name="horaAudiencia"
                     id="horaAudiencia"
-                    class="col-4 form-control">
+                    class="col-4 form-control"
+                    formControlName="horaAudiencia">
                         <option 
                         *ngFor="let hora of horas"
                         value="hora">{{ hora }}</option>
@@ -272,7 +280,8 @@
                     <select 
                     name="minutoAudiencia"
                     id="minutoAudiencia"
-                    class="col-4 form-control">
+                    class="col-4 form-control"
+                    formControlName="minutoAudiencia">
                         <option 
                         *ngFor="let minuto of minutos"
                         value="minuto">{{ minuto }}</option>
@@ -283,7 +292,8 @@
                     <select 
                     class="col-8 form-control"
                     name="estadoAudiencia" 
-                    id="estadoAudiencia">
+                    id="estadoAudiencia"
+                    formControlName="estadoAudiencia">
                         <option 
                         *ngFor="let estado of estados"
                         value="estado">{{ estado }}</option>
@@ -294,7 +304,8 @@
                     <select 
                     class="col-8 form-control"
                     name="factibilidadAudiencia" 
-                    id="factibilidadAudiencia">
+                    id="factibilidadAudiencia"
+                    formControlName="factibilidadAudiencia">
                         <option 
                         *ngFor="let factibilidad of factibilidades"
                         value="factibilidad">{{ factibilidad }}</option>
@@ -305,7 +316,8 @@
                     <select 
                     class="col-8 form-control"
                     name="etapaAudiencia" 
-                    id="etapaAudiencia">
+                    id="etapaAudiencia"
+                    formControlName="etapaAudiencia">
                         <option 
                         *ngFor="let etapaProcesal of EtapasProcesales"
                         value="etapaProcesal">{{ etapaProcesal }}</option>
@@ -318,7 +330,7 @@
                     id="tribunalJuzgado" 
                     name="tribunalJuzgado"
                     class="col-8 form-control"
-                    ngModel>
+                    formControlName="tribunalJuzgado">
                 </div>
                 <div class="form-group form-inline">
                     <label for="numExpediente" class="col-4 col-form-label">Número de Expediente:</label>
@@ -327,7 +339,7 @@
                     id="numExpediente" 
                     name="numExpediente"
                     class="col-8 form-control"
-                    ngModel>
+                    formControlName="numExpediente">
                 </div>
                 <div class="form-group form-inline">
                     <label for="observaciones" class="col-4 col-form-label">Observaciones:</label>
@@ -337,11 +349,14 @@
                     id="observaciones" 
                     name="observaciones" 
                     rows="3"
-                    ngModel></textarea>
+                    formControlName="observaciones"></textarea>
                 </div>
               </form>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-warning" data-dismiss="modal">Agregar Audiencia</button>
+                <button type="button"
+                class="btn btn-warning"
+                data-dismiss="modal"
+                (click)="addAudiencia()">Agregar Audiencia</button>
                 <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Cancelar</button>
             </div>
           </div>

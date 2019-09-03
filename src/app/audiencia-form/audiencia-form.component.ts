@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl } from '@angular/forms';
+
 import { AdmonFormService } from '../shared/admon-form.service';
-import { FormGroup, FormControl, FormControlName } from '@angular/forms';
 import { RegistroDemandaAdmon } from '../shared/registroDemandaAdmon.model';
+import { Audiencia } from '../shared/audiencia.model';
+import { AudienciaService } from '../shared/audiencia.service';
 
 @Component({
   selector: 'app-audiencia-form',
@@ -35,13 +38,15 @@ export class AudienciaFormComponent implements OnInit {
   registroAudiencia: FormGroup;
   registroDemanda: RegistroDemandaAdmon;
 
-  constructor(private admonFormService: AdmonFormService) { }
+  constructor(private admonFormService: AdmonFormService,
+              private audienciaService: AudienciaService) { }
 
   ngOnInit() {
 
     this.registroDemanda = this.admonFormService.registro;
     console.log(this.registroDemanda);
     this.initForm();
+    this.initFormSecondary();
 
     this.admonFormService.registroAgregado
     .subscribe(registro => {
@@ -110,8 +115,32 @@ export class AudienciaFormComponent implements OnInit {
 
   addAudiencia() {
     console.log(this.registroAudiencia);
-    //agregar control para que funcione la forma
+    const audiencia = new Audiencia(this.registroAudiencia.get('fechaAudiencia').value,
+    this.registroAudiencia.get('horaAudiencia').value,
+    this.registroAudiencia.get('minutoAudiencia').value,
+    this.registroAudiencia.get('estadoAudiencia').value,
+    this.registroAudiencia.get('factibilidadAudiencia').value,
+    this.registroAudiencia.get('etapaAudiencia').value,
+    this.registroAudiencia.get('tribunalJuzgado').value,
+    this.registroAudiencia.get('numExpediente').value,
+    this.registroAudiencia.get('observaciones').value);
+
+    this.audienciaService.addAudiencia(audiencia);
+    this.registroDemanda.audiencias = this.audienciaService.fetchAudiencias();
   }
 
+  initFormSecondary() {
+    this.registroAudiencia = new FormGroup({
+      fechaAudiencia: new FormControl(null),
+      horaAudiencia: new FormControl(null),
+      minutoAudiencia: new FormControl(null),
+      estadoAudiencia: new FormControl(null),
+      factibilidadAudiencia: new FormControl(null),
+      etapaAudiencia: new FormControl(null),
+      tribunalJuzgado: new FormControl(null),
+      numExpediente: new FormControl(null),
+      observaciones: new FormControl(null)
+    });
+  }
 
 }

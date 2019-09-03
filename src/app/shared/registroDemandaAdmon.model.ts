@@ -1,6 +1,7 @@
 import { Proveedor } from './proveedor.model';
 import { Determinante } from './determinante.model';
 import { Abogado } from './abogados.model';
+import { Audiencia } from './audiencia.model';
 
 export class RegistroDemandaAdmon {
 
@@ -40,6 +41,7 @@ export class RegistroDemandaAdmon {
         public sentenciaTFJFA: string,
         public sentenciaDefinitiva: string,
         public resultadoFinal: string,
-        public estadoFinal: string
+        public estadoFinal: string,
+        public audiencias: Audiencia[]
     ) { }
 }

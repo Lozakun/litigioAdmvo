@@ -16,6 +16,7 @@ import { AdmonFormService } from './shared/admon-form.service';
 import { AuthGuard } from './shared/auth-guard.service';
 import { AuthService } from './shared/auth.service';
 import { DespachoService } from './shared/despacho.service';
+import { AudienciaService } from './shared/audiencia.service';
 
 @NgModule({
   declarations: [
@@ -35,9 +36,13 @@ import { DespachoService } from './shared/despacho.service';
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [AdmonFormService, AuthGuard, AuthService, DespachoService],
+  providers: [AdmonFormService,
+    AuthGuard,
+    AuthService,
+    DespachoService,
+    AudienciaService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
-  constructor(private admonFormService: AdmonFormService) {}
+  constructor() {}
 }

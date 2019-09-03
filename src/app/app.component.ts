@@ -3,6 +3,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { AdmonFormService } from './shared/admon-form.service';
 import { RegistroDemandaAdmon } from './shared/registroDemandaAdmon.model';
 import { DespachoService } from './shared/despacho.service';
+import { Audiencia } from './shared/audiencia.model';
 
 @Component({
   selector: 'app-root',
@@ -38,7 +39,8 @@ export class AppComponent implements OnInit {
       tipoPersona: ''
     }, null, null, null, '', '', {numDeterminante: null, nombreDeterminante: '',
       formatoDeterminante: ''}, null, null, false, false, false, false, false, null, null,
-      false, false, false, false, false, [], null, null, [null], false, null, null, null, null, null, null);
+      false, false, false, false, false, [], null, null, [null], false, null, null, null,
+      null, null, null, []);
     this.registroDemanda = this.admonService.registro;
     console.log(this.registroDemanda);
     this.folioDemanda = this.registroDemanda.folioDemanda;
