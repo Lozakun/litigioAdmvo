@@ -191,10 +191,13 @@
                         <div class="btn-group">
                             <button 
                             class="btn btn-outline-dark btn-continuar" 
-                            type="button">Anterior</button>
+                            type="button"
+                            [routerLink]="['/litigioAdmv', 'despacho']" 
+                            routerLinkActive="router-link-active" >Anterior</button>
                             <button 
                             type="submit"
-                            class="btn btn-warning btn-continuar">Guardar</button>
+                            class="btn btn-warning btn-continuar"
+                            [disabled]="!audienciaForm.valid">Guardar</button>
                         </div>
                     </div>
                 </div>
@@ -231,8 +234,11 @@
                             <th>Etapa Procesal</th>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let audiencia of registroDemanda.audiencias">
-                            <td></td>
+                        <tr style="cursor: pointer;" 
+                        *ngFor="let audiencia of registroDemanda.audiencias; let i = index">
+                            <td><a type="button"
+                                data-toggle="modal"
+                                data-target="#audienciaModal">Editar</a></td>
                             <td>{{ audiencia.tribunalJuzgado }}</td>
                             <td>{{ audiencia.fecha }}</td>
                             <td>{{ audiencia.hora }}:{{ audiencia.minutos }}</td>
@@ -275,7 +281,7 @@
                     formControlName="horaAudiencia">
                         <option 
                         *ngFor="let hora of horas"
-                        value="hora">{{ hora }}</option>
+                        [value]="hora">{{ hora }}</option>
                     </select>
                     <select 
                     name="minutoAudiencia"
@@ -284,7 +290,7 @@
                     formControlName="minutoAudiencia">
                         <option 
                         *ngFor="let minuto of minutos"
-                        value="minuto">{{ minuto }}</option>
+                        [value]="minuto">{{ minuto }}</option>
                     </select>
                 </div>
                 <div class="form-group form-inline">
@@ -296,7 +302,7 @@
                     formControlName="estadoAudiencia">
                         <option 
                         *ngFor="let estado of estados"
-                        value="estado">{{ estado }}</option>
+                        [value]="estado">{{ estado }}</option>
                     </select>
                 </div>
                 <div class="form-group form-inline">
@@ -308,7 +314,7 @@
                     formControlName="factibilidadAudiencia">
                         <option 
                         *ngFor="let factibilidad of factibilidades"
-                        value="factibilidad">{{ factibilidad }}</option>
+                        [value]="factibilidad">{{ factibilidad }}</option>
                     </select>
                 </div>
                 <div class="form-group form-inline">
@@ -320,7 +326,7 @@
                     formControlName="etapaAudiencia">
                         <option 
                         *ngFor="let etapaProcesal of EtapasProcesales"
-                        value="etapaProcesal">{{ etapaProcesal }}</option>
+                        [value]="etapaProcesal">{{ etapaProcesal }}</option>
                     </select>
                 </div>
                 <div class="form-group form-inline">
@@ -355,9 +361,15 @@
             <div class="modal-footer">
                 <button type="button"
                 class="btn btn-warning"
+                [disabled]="!registroAudiencia.valid"
                 data-dismiss="modal"
-                (click)="addAudiencia()">Agregar Audiencia</button>
-                <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Cancelar</button>
+                (click)="addAudiencia()"
+                >Agregar Audiencia</button>
+                <button 
+                type="button" 
+                class="btn btn-outline-dark" 
+                data-dismiss="modal"
+                (click)="onCancelar()">Cancelar</button>
             </div>
           </div>
         </div>

@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { AdmonFormService } from '../shared/admon-form.service';
 import { RegistroDemandaAdmon } from '../shared/registroDemandaAdmon.model';
 import { Audiencia } from '../shared/audiencia.model';
 import { AudienciaService } from '../shared/audiencia.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-audiencia-form',
@@ -27,9 +28,9 @@ export class AudienciaFormComponent implements OnInit {
   embargo: string;
   estadoSentencia = 0;
   resoluciones = ['Concedida'];
-  horas = ['0', '1', '2', '3', '4', '5', '6', '7', '8',
-  '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19' , '20', '21', '22', '23' ];
-  minutos = ['0', '5', '10', '15', '20', '25', '30', '35', '40', '45', '50', '55'];
+  horas = ['00', '01', '02', '03', '04', '05', '06', '07', '08',
+  '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19' , '20', '21', '22', '23' ];
+  minutos = ['00', '05', '10', '15', '20', '25', '30', '35', '40', '45', '50', '55'];
   estados = ['Programada', 'Cancelada', 'Reprogramada', 'Desahogada'];
   factibilidades = ['Remoto', 'Posible', 'Probable'];
   EtapasProcesales = ['Revisión', 'Apelación', 'Recurso', 'Amparo'];
@@ -39,7 +40,8 @@ export class AudienciaFormComponent implements OnInit {
   registroDemanda: RegistroDemandaAdmon;
 
   constructor(private admonFormService: AdmonFormService,
-              private audienciaService: AudienciaService) { }
+              private audienciaService: AudienciaService,
+              private router: Router) { }
 
   ngOnInit() {
 
@@ -90,6 +92,7 @@ export class AudienciaFormComponent implements OnInit {
     this.admonFormService.registro.sentenciaDefinitiva = this.audienciaForm.get('sentenciaDefinitiva').value;
     this.admonFormService.registro.resultadoFinal = this.audienciaForm.get('resultadoFinal').value;
     this.admonFormService.registro.estadoFinal = this.audienciaForm.get('estadoFinal').value;
+    this.admonFormService.registro.registroAudiencia = true;
     this.admonFormService.registroAgregado.subscribe(registro => {
       this.registroDemanda = registro;
     });
@@ -97,6 +100,7 @@ export class AudienciaFormComponent implements OnInit {
     this.validaSentencia(this.audienciaForm.get('sentenciaDefinitiva') as FormControl, 1);
     this.validaSentencia(this.audienciaForm.get('resultadoFinal') as FormControl, 2);
     this.validaSentencia(this.audienciaForm.get('estadoFinal') as FormControl, 3);
+    this.router.navigate(['litigioAdmvo', 'resolucion']);
     console.log(this.registroDemanda);
     console.log(this.registroDemanda.sentenciaTFJFA != null);
     console.log(this.audienciaForm);
@@ -127,20 +131,40 @@ export class AudienciaFormComponent implements OnInit {
 
     this.audienciaService.addAudiencia(audiencia);
     this.registroDemanda.audiencias = this.audienciaService.fetchAudiencias();
+    this.registroAudiencia.reset();
+    // this.initFormSecondary();
   }
 
   initFormSecondary() {
+    console.log(this.estadoSentencia);
+    console.log(this.EtapasProcesales[this.estadoSentencia]);
     this.registroAudiencia = new FormGroup({
-      fechaAudiencia: new FormControl(null),
-      horaAudiencia: new FormControl(null),
-      minutoAudiencia: new FormControl(null),
-      estadoAudiencia: new FormControl(null),
-      factibilidadAudiencia: new FormControl(null),
-      etapaAudiencia: new FormControl(null),
-      tribunalJuzgado: new FormControl(null),
-      numExpediente: new FormControl(null),
-      observaciones: new FormControl(null)
+      fechaAudiencia: new FormControl(null, Validators.required),
+      horaAudiencia: new FormControl(null, Validators.required),
+      minutoAudiencia: new FormControl(null, Validators.required),
+      estadoAudiencia: new FormControl(this.EtapasProcesales[this.estadoSentencia], Validators.required),
+      factibilidadAudiencia: new FormControl(null, Validators.required),
+      etapaAudiencia: new FormControl(null, Validators.required),
+      tribunalJuzgado: new FormControl(this.registroDemanda.autoridadMateria, Validators.required),
+      numExpediente: new FormControl(this.registroDemanda.expediente, Validators.required),
+      observaciones: new FormControl(null, Validators.required)
     });
+  }
+
+  onCancelar() {
+    this.registroAudiencia.reset();
+    this.initFormSecondary();
+    // this.registroAudiencia.setValue({
+    //   fechaAudiencia: new FormControl(null, Validators.required),
+    //   horaAudiencia: new FormControl(null, Validators.required),
+    //   minutoAudiencia: new FormControl(null, Validators.required),
+    //   estadoAudiencia: new FormControl(this.EtapasProcesales[this.estadoSentencia], Validators.required),
+    //   factibilidadAudiencia: new FormControl(null, Validators.required),
+    //   etapaAudiencia: new FormControl(null, Validators.required),
+    //   tribunalJuzgado: new FormControl(this.registroDemanda.autoridadMateria, Validators.required),
+    //   numExpediente: new FormControl(this.registroDemanda.expediente, Validators.required),
+    //   observaciones: new FormControl(null, Validators.required)
+    // });
   }
 
 }
