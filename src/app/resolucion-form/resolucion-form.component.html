@@ -1,4 +1,4 @@
-<form>
+<form [formGroup]="resolucionForm" (ngSubmit)="guardarResolucion()">
     <div class="row">
         <div class="col-md-6">
             <div class="col-md-12 border-bottom">
@@ -12,7 +12,8 @@
                     <select 
                     class="form-control col-8"
                     name="motivoTermino" 
-                    id="motivoTermino">
+                    id="motivoTermino"
+                    formControlName="motivoTermino">
                         <option 
                         *ngFor="let motivo of motivos"
                         value="motivo">{{ motivo }}</option>
@@ -25,7 +26,7 @@
                     type="text"
                     id="instanciaConclusion"
                     name="instanciaConclusion"
-                    ngModel>
+                    formControlName="instanciaConclusion">
                 </div>
                 <div class="form-group form-inline">
                     <label 
@@ -34,10 +35,11 @@
                     <select 
                     class="form-control col-8"
                     name="sentidoTermino" 
-                    id="sentidoTermino">
+                    id="sentidoTermino"
+                    formControlName="sentidoTermino">
                         <option 
                         *ngFor="let sentido of sentidos"
-                        value="sentido">{{ sentido }}</option>
+                        [value]="sentido">{{ sentido }}</option>
                     </select>
                 </div>
                 <div class="form-group form-inline">
@@ -47,8 +49,7 @@
                     class="col-8 form-control"
                     id="fechaTermino"
                     name="fechaTermino"
-                    ngModel
-                    required>
+                    formControlName="fechaTermino">
                 </div>
             </div>
         </div>
@@ -63,7 +64,8 @@
                     class="col-8 form-control"
                     type="number" 
                     id="importeHistorico" 
-                    name="importeHistorico">
+                    name="importeHistorico"
+                    formControlName="importeHistorico">
                 </div>
                 <div class="form-group form-inline">
                     <label class="col-4" for="importeActualizado">Importe Actualizado del Juicio:</label>
@@ -71,7 +73,8 @@
                     class="col-8 form-control"
                     type="number" 
                     id="importeActualizado" 
-                    name="importeActualizado">
+                    name="importeActualizado"
+                    formControlName="importeActualizado">
                 </div>
             </div>
         </div>
@@ -83,8 +86,14 @@
                 <div class="form-group form-inline">
                     <div class="col-4"></div>
                     <div class="col-8">
-                        <button class="btn btn-danger btn-continuar">Terminar</button>
-                        <button class="btn btn-outline-dark btn-continuar">Regresar</button>
+                        <button 
+                        type="submit"
+                        class="btn btn-danger btn-continuar"
+                        [disabled]="!resolucionForm.valid">Terminar</button>
+                        <button 
+                        class="btn btn-outline-dark btn-continuar"
+                        [routerLink]="['/litigioAdmvo', 'audiencia']" 
+                        >Regresar</button>
                     </div>
                 </div>
             </div>

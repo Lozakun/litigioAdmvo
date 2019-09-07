@@ -43,6 +43,12 @@ export class RegistroDemandaAdmon {
         public resultadoFinal: string,
         public estadoFinal: string,
         public audiencias: Audiencia[],
-        public registroAudiencia: boolean
+        public registroAudiencia: boolean,
+        public motivoTermino: string,
+        public instanciaConclusion: string,
+        public sentidoTermino: string,
+        public fechaTermino: Date,
+        public importeActualizado: number,
+        public estadoDemanda: string
     ) { }
 }

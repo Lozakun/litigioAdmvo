@@ -40,7 +40,7 @@ export class AppComponent implements OnInit {
     }, null, null, null, '', '', {numDeterminante: null, nombreDeterminante: '',
       formatoDeterminante: ''}, null, null, false, false, false, false, false, null, null,
       false, false, false, false, false, [], null, null, [null], false, null, null, null,
-      null, null, null, [], false);
+      null, null, null, [], false, null, null, null, null, null, null);
     this.registroDemanda = this.admonService.registro;
     console.log(this.registroDemanda);
     this.folioDemanda = this.registroDemanda.folioDemanda;
