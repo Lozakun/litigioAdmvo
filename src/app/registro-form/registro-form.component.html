@@ -1,4 +1,4 @@
-<form (ngSubmit)="onRegistrar()" #registroForm="ngForm">
+<form [formGroup]="registroForm" (ngSubmit)="onRegistrar()">
     <div class="row">
         <div class="col-md-12 border-bottom">
             <h5>Datos del Procedimiento Judicial/Jurisdiccional</h5>
@@ -17,12 +17,10 @@
                         type="text"
                         id="oficio"
                         name="oficio"
-                        [ngModel] = "registroDemanda.oficio"
-                        required
-                        #oficio="ngModel">
+                        formControlName="oficio">
                         <small
                         class="form-text text-muted"
-                        *ngIf="!oficio.valid && oficio.touched"
+                        *ngIf="!registroForm.get('oficio').valid && registroForm.get('oficio').touched"
                         >El Oficio o Resolución son obligatorios!</small>
                     </div>
                 </div>
@@ -36,12 +34,10 @@
                         type="text"
                         id="expediente"
                         name="expediente"
-                        [ngModel]="registroDemanda.expediente"
-                        required
-                        #expediente="ngModel">
+                        formControlName="expediente">
                         <small
                         class="form-text text-muted"
-                        *ngIf="!expediente.valid && expediente.touched"
+                        *ngIf="!registroForm.get('expediente').valid && registroForm.get('expediente').touched"
                         >Indica por favor el Expediente del Juicio!</small>
                     </div>
                 </div>
@@ -55,16 +51,14 @@
                         class="form-control"
                         id="fechaNotificacion"
                         name="fechaNotificacion"
-                        [ngModel]="registroDemanda.fechaNotificacion"
-                        required
-                        #fechaNotificacion="ngModel">
+                        formControlName="fechaNotificacion"
+                        >
                         <small
                         class="form-text text-muted"
-                        *ngIf="!fechaNotificacion.valid && fechaNotificacion.touched">Indica la fecha de notificación de Resolución!</small>
-                        <small
-                        class="form-text text-muted"
-                        *ngIf="(fechaNotificacion.value < registroDemanda.fechaRegistro) && fechaNotificacion.touched"
-                        >La fecha de la Demanda debe ser menor o igual a la fecha de hoy!</small>
+                        *ngIf="!registroForm.get('fechaNotificacion').valid && registroForm.get('fechaNotificacion').touched"
+                        >
+                        <span *ngIf="registroForm.get('fechaNotificacion').errors['fechaMayor']">La Fecha de Notificación debe ser igual o menor a la fecha de hoy</span> 
+                        <span *ngIf="registroForm.get('fechaNotificacion').errors['required']">La Fecha de Notificación es Requerida!</span></small>
                     </div>
                 </div>
                 <div class="form-group form-row">
@@ -104,17 +98,14 @@
                         class="form-control"
                         id="fechaDemanda"
                         name="fechaDemanda"
-                        [ngModel]="registroDemanda.fechaDemanda"
-                        required
-                        #fechaDemanda = "ngModel">
+                        formControlName="fechaDemanda">
                         <small
                         class="form-text text-muted"
-                        *ngIf="!fechaDemanda.valid && fechaDemanda.touched"
-                        >La fecha de la Demanda es obligatoria!</small>
-                        <small
-                        class="form-text text-muted"
-                        *ngIf="(fechaDemanda.value < fechaNotificacion.value) && fechaDemanda.touched"
-                        >La fecha de la Demanda debe ser mayor o igual a la fecha de notificación!</small>
+                        *ngIf="!registroForm.get('fechaDemanda').valid && registroForm.get('fechaDemanda').touched"
+                        >
+                        <span *ngIf="registroForm.get('fechaDemanda').errors['required']">fecha de la Demanda es Requerida!</span>
+                        <span *ngIf="registroForm.get('fechaDemanda').errors['fechaMayor']">fecha de la Demanda debe ser menor o igual a la fecha de hoy!</span>
+                        </small>
                     </div>
                 </div>
                 <div class="form-group form-row">
@@ -126,16 +117,14 @@
                         id="tipoDemanda" 
                         name="tipoDemanda" 
                         class="form-control"
-                        [ngModel]="registroDemanda.tipoDemanda"
-                        required
-                        #tipoDemanda="ngModel">
+                        formControlName="tipoDemanda">
                             <option  
                             *ngFor="let tipoDemanda of tiposDemanda"
                             [value]="tipoDemanda">{{ tipoDemanda }}</option>
                         </select>
                         <small
                         class="form-text text-muted"
-                        *ngIf="!tipoDemanda.valid && tipoDemanda.touched">El tipo de Demanda es obligatorio!</small>
+                        *ngIf="!registroForm.get('tipoDemanda').valid && registroForm.get('tipoDemanda').touched">El tipo de Demanda es obligatorio!</small>
                     </div>
                 </div>
                 <div class="form-group form-row">
@@ -147,20 +136,18 @@
                         id="participaTercero" 
                         name="participaTercero" 
                         class="form-control"
-                        [ngModel]="registroDemanda.participaTercero"
-                        required
-                        #participaTercero="ngModel">
+                        formControlName="participaTercero">
                             <option  
                             *ngFor="let tipoParticipacion of tiposParticipacion; let i of index"
                             [value]="i">{{ tipoParticipacion }}</option>
                         </select>
                         <small
                         class="form-text text-muted"
-                        *ngIf="!participaTercero.valid && participaTercero.touched"
+                        *ngIf="!registroForm.get('participaTercero').valid && registroForm.get('participaTercero').touched"
                         >Indica el tipo de participación del proveedor!</small>
                         <small
                         class="form-text text-muted"
-                        *ngIf="((participaTercero.value == participaWalmart.value) && (participaTercero.touched) && (participaWalmart.touched))"
+                        *ngIf="((registroForm.get('participaTercero').value == registroForm.get('participaWalmart').value) && (registroForm.get('participaTercero').touched) && (registroForm.get('participaWalmart').touched))"
                         >La participación del proveedor debe ser diferente a la de Walmart!</small>
                     </div>
                 </div>
@@ -174,13 +161,11 @@
                         class="form-control"
                         id="motivoDemanda"
                         name="motivoDemanda"
-                        [ngModel]="registroDemanda.motivoDemanda"
-                        required
-                        #motivoDemanda="ngModel"
+                        formControlName="motivoDemanda"
                         >
                         <small
                         class="form-text text-muted"
-                        *ngIf="!motivoDemanda.valid && motivoDemanda.touched">Indica el Motivo de la demanda!</small>
+                        *ngIf="!registroForm.get('motivoDemanda').valid && registroForm.get('motivoDemanda').touched">Indica el Motivo de la demanda!</small>
                     </div>
                 </div>
             </div>
@@ -197,9 +182,7 @@
                             class="form-control"
                             id="sodiedad" 
                             name="sociedad"
-                            [ngModel]="registroDemanda.sociedad"
-                            required
-                            #sociedad="ngModel"
+                            formControlName="sociedad"
                             >
                                 <option 
                                 *ngFor="let sociedad of sociedades"
@@ -207,7 +190,7 @@
                             </select>
                             <small
                             class="form-text text-muted"
-                            *ngIf="!sociedad.valid && sociedad.touched">Es necesario indicar la Sociedad!</small>
+                            *ngIf="!registroForm.get('sociedad').valid && registroForm.get('sociedad').touched">Es necesario indicar la Sociedad!</small>
                         </div>
                 </div>
                 <div class="form-group form-row">
@@ -245,13 +228,11 @@
                         id="formato"
                         name="formato"
                         type="text"
-                        disabled="true"
-                        [ngModel]="registroDemanda.determinante.formatoDeterminante"
-                        required
-                        #formato="ngModel">
+                        formControlName="formato"
+                        [value]="registroDemanda.determinante.formatoDeterminante">
                         <small
                         class="form-text text-muted"
-                        *ngIf="!formato.valid && formato.touched">El formtato es obligatorio, valida la determinante!</small>
+                        *ngIf="!registroForm.get('formato').valid && registroForm.get('formato').touched">El formato es obligatorio, valida la determinante!</small>
                     </div>
                 </div>
                 <div class="form-group form-row">
@@ -263,9 +244,7 @@
                         name="participaWalmart" 
                         id="participaWalmart"
                         class="form-control"
-                        [ngModel]="registroDemanda.participaWalmart"
-                        required
-                        #participaWalmart="ngModel"
+                        formControlName="participaWalmart"
                         >
                             <option 
                             *ngFor="let tipoParticipacion of tiposParticipacion; let i of index"
@@ -273,11 +252,11 @@
                         </select>
                         <small
                         class="form-text text-muted"
-                        *ngIf="!participaWalmart.valid && participaWalmart.touched"
+                        *ngIf="!registroForm.get('participaWalmart').valid && registroForm.get('participaWalmart').touched"
                         >Indica el tipo de participación de Walmart</small>
                         <small
                         class="form-text text-muted"
-                        *ngIf="(participaWalmart.value == participaTercero.value && participaWalmart.touched)"
+                        *ngIf="(registroForm.get('participaWalmart').value == registroForm.get('participaTercero').value && registroForm.get('participaWalmart').touched)"
                         >La participación de Walmart debe ser diferente al proveedor!</small>
                     </div>
                 </div>
@@ -291,12 +270,10 @@
                         id="importeHistorico"
                         name="importeHistorico"
                         class="form-control"
-                        [ngModel]="registroDemanda.importeHistorico"
-                        required
-                        #importeHistorico="ngModel">
+                        formControlName="importeHistorico">
                         <small 
                         class="form-text text-muted"
-                        *ngIf="!importeHistorico.valid && importeHistorico.touched"
+                        *ngIf="!registroForm.get('importeHistorico').valid && registroForm.get('importeHistorico').touched"
                         >El importe histórico es obligatorio!</small>
                     </div>
                 </div>
@@ -312,7 +289,7 @@
                 <button 
                 class="btn btn-warning btn-continuar" 
                 type="submit"
-                [disabled]="(!registroForm.valid) || (fechaNotificacion > fechaDemanda) || (fechaDemanda.value < fechaNotificacion.value)">Siguiente</button>
+                [disabled]="(!registroForm.valid) || (registroForm.get('fechaNotificacion').value > registroForm.get('fechaDemanda').value) || (registroForm.get('fechaDemanda').value < registroForm.get('fechaNotificacion').value)">Siguiente</button>
             </div>
         </div>
     </div>

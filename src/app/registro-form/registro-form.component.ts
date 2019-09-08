@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
-import { NgForm, NgModel } from '@angular/forms';
+import { FormGroup, FormControl, Validators, Form } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { Proveedor } from '../shared/proveedor.model';
@@ -13,18 +13,7 @@ import { AdmonFormService } from '../shared/admon-form.service';
   styleUrls: ['./registro-form.component.css']
 })
 export class RegistroFormComponent implements OnInit {
-  @ViewChild('registroForm', {static: false}) regForm: NgForm;
-  @ViewChild('oficio', {static: false}) oficioM: NgModel;
-  @ViewChild('expediente', {static: false}) expediente: NgModel;
-  @ViewChild('fechaNotificacion', {static: false}) fechaNotificacion: NgModel;
-  @ViewChild('fechaDemanda', {static: false}) fechaDemanda: NgModel;
-  @ViewChild('tipoDemanda', {static: false}) tipoDemanda: NgModel;
-  @ViewChild('participaTercero', {static: false}) participaTercero: NgModel;
-  @ViewChild('motivoDemanda', {static: false}) motivoDemanda: NgModel;
-  @ViewChild('sociedad', {static: false}) sociedad: NgModel;
-  @ViewChild('participaWalmart', {static: false}) participaWalmart: NgModel;
-  @ViewChild('importeHistorico', {static: false}) importeHistorico: NgModel;
-  @ViewChild('autoridadImpositora', {static: false}) autoridadImpositora: Proveedor;
+
   tiposDemanda = ['Requerimiento', 'Demanda', 'Resolución'];
   tiposParticipacion = ['Actor', 'Demandado', 'Tercero'];
   sociedades = ['Sociedad 1', 'Sociedad 2', 'Sociedad 3'];
@@ -34,6 +23,10 @@ export class RegistroFormComponent implements OnInit {
   folioDemanda: string;
   autoridadImpositoraSeleccionada = false;
   oficio: string;
+  today = new Date();
+  todayDate = new Date();
+
+  registroForm: FormGroup;
 
   constructor(private admonFormService: AdmonFormService, private router: Router) {
     this.admonFormService.registroAgregado.subscribe(
@@ -45,25 +38,47 @@ export class RegistroFormComponent implements OnInit {
 
   ngOnInit() {
       this.registroDemanda = this.admonFormService.registro;
+      this.initializaForm();
+      console.log(this.registroForm);
+  }
+
+  initializaForm() {
+    console.log(Date.now());
+    this.registroForm = new FormGroup({
+      oficio: new FormControl(this.registroDemanda.oficio),
+      expediente: new FormControl(this.registroDemanda.expediente),
+      // tslint:disable-next-line:max-line-length
+      fechaNotificacion: new FormControl(!this.registroDemanda.fechaNotificacion ? this.toJSONLocal(this.todayDate) : this.registroDemanda.fechaNotificacion,
+      [Validators.required, this.validaFecha.bind(this)]),
+      fechaDemanda: new FormControl(this.registroDemanda.fechaDemanda, [Validators.required,
+        this.validaFecha.bind(this)]),
+      tipoDemanda: new FormControl(this.registroDemanda.tipoDemanda),
+      participaTercero: new FormControl(this.registroDemanda.participaTercero),
+      motivoDemanda: new FormControl(this.registroDemanda.motivoDemanda),
+      sociedad: new FormControl(this.registroDemanda.sociedad),
+      formato: new FormControl({value: this.registroDemanda.determinante.formatoDeterminante, disabled: true}),
+      participaWalmart: new FormControl(this.registroDemanda.participaWalmart),
+      importeHistorico: new FormControl(this.registroDemanda.importeHistorico, [Validators.required, Validators.pattern(/^[1-9]+[0-9]*$/)]),
+      autoridadImpositora: new FormControl(this.registroDemanda.autoridadImpositora),
+    });
   }
 
   onRegistrar() {
     this.folioDemanda = 'LA - ' + Math.floor(Math.random() * (999999 - 1) + 1);
     console.log('Intento de Registro! ' + this.folioDemanda);
+
     if (this.autoridadImpositoraSeleccionada || this.registroDemanda.registroRealizado) {
       this.registroDemanda.folioDemanda = this.folioDemanda;
-      this.registroDemanda.oficio = this.oficioM.value;
-      this.registroDemanda.expediente = this.expediente.value;
-      this.registroDemanda.fechaNotificacion = this.fechaNotificacion.value;
-      this.registroDemanda.autoridadImpositora = this.registroDemanda.autoridadImpositora;
-      this.registroDemanda.fechaDemanda = this.fechaDemanda.value;
-      this.registroDemanda.tipoDemanda = this.tipoDemanda.value;
-      this.registroDemanda.participaTercero = this.participaTercero.value;
-      this.registroDemanda.motivoDemanda = this.motivoDemanda.value;
-      this.registroDemanda.sociedad = this.sociedad.value;
-      this.registroDemanda.determinante = this.registroDemanda.determinante;
-      this.registroDemanda.participaWalmart = this.participaWalmart.value;
-      this.registroDemanda.importeHistorico = this.importeHistorico.value;
+      this.registroDemanda.oficio = this.registroForm.get('oficio').value;
+      this.registroDemanda.expediente = this.registroForm.get('expediente').value;
+      this.registroDemanda.fechaNotificacion = this.registroForm.get('fechaNotificacion').value;
+      this.registroDemanda.fechaDemanda = this.registroForm.get('fechaDemanda').value;
+      this.registroDemanda.tipoDemanda = this.registroForm.get('tipoDemanda').value;
+      this.registroDemanda.participaTercero = this.registroForm.get('participaTercero').value;
+      this.registroDemanda.motivoDemanda = this.registroForm.get('motivoDemanda').value;
+      this.registroDemanda.sociedad = this.registroForm.get('sociedad').value;
+      this.registroDemanda.participaWalmart = this.registroForm.get('participaWalmart').value;
+      this.registroDemanda.importeHistorico = this.registroForm.get('importeHistorico').value;
       this.registroDemanda.registroRealizado = true;
       this.registroDemanda.estadoDemanda = 'En Registro';
 
@@ -99,11 +114,17 @@ export class RegistroFormComponent implements OnInit {
     };
   }
 
-  validaFecha(fechaDemanda) {
-    if (fechaDemanda > this.fechaNotificacion) {
-      return true;
-    } else {
-      return null;
+  toJSONLocal(date) {
+    const local = new Date(date);
+    local.setMinutes(date.getMinutes() - date.getTimezoneOffset());
+    return local.toJSON().slice(0, 10);
+}
+
+  validaFecha(control: FormControl): {[s: string]: boolean} {
+    console.log(control);
+    if (control.value > this.toJSONLocal(this.todayDate)) {
+      console.log(control);
+      return {fechaMayor: true};
     }
   }
 }
