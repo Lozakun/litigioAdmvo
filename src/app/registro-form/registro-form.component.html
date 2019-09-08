@@ -1,4 +1,4 @@
-<form (ngSubmit)="onRegistrar(regForm)" #registroForm="ngForm">
+<form (ngSubmit)="onRegistrar()" #registroForm="ngForm">
     <div class="row">
         <div class="col-md-12 border-bottom">
             <h5>Datos del Procedimiento Judicial/Jurisdiccional</h5>
@@ -61,6 +61,10 @@
                         <small
                         class="form-text text-muted"
                         *ngIf="!fechaNotificacion.valid && fechaNotificacion.touched">Indica la fecha de notificación de Resolución!</small>
+                        <small
+                        class="form-text text-muted"
+                        *ngIf="(fechaNotificacion.value < registroDemanda.fechaRegistro) && fechaNotificacion.touched"
+                        >La fecha de la Demanda debe ser menor o igual a la fecha de hoy!</small>
                     </div>
                 </div>
                 <div class="form-group form-row">
@@ -107,6 +111,10 @@
                         class="form-text text-muted"
                         *ngIf="!fechaDemanda.valid && fechaDemanda.touched"
                         >La fecha de la Demanda es obligatoria!</small>
+                        <small
+                        class="form-text text-muted"
+                        *ngIf="(fechaDemanda.value < fechaNotificacion.value) && fechaDemanda.touched"
+                        >La fecha de la Demanda debe ser mayor o igual a la fecha de notificación!</small>
                     </div>
                 </div>
                 <div class="form-group form-row">
@@ -304,7 +312,7 @@
                 <button 
                 class="btn btn-warning btn-continuar" 
                 type="submit"
-                [disabled]="(!registroForm.valid)">Siguiente</button>
+                [disabled]="(!registroForm.valid) || (fechaNotificacion > fechaDemanda) || (fechaDemanda.value < fechaNotificacion.value)">Siguiente</button>
             </div>
         </div>
     </div>

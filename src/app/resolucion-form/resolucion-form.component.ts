@@ -14,14 +14,7 @@ export class ResolucionFormComponent implements OnInit {
   sentidos = ['Favorable', 'Desfavorable'];
   registroDemanda: RegistroDemandaAdmon;
 
-  resolucionForm: FormGroup = new FormGroup({
-    motivoTermino: new FormControl(null, Validators.required),
-    instanciaConclusion: new FormControl(this.registroDemanda.autoridadMateria, Validators.required),
-    sentidoTermino: new FormControl(null, Validators.required),
-    fechaTermino: new FormControl(null, Validators.required),
-    importeHistorico: new FormControl(this.registroDemanda.importeHistorico, Validators.maxLength(20)),
-    importeActualizado: new FormControl(null, Validators.maxLength(20))
-  });
+  resolucionForm: FormGroup;
 
   constructor(private admonFormService: AdmonFormService) {
     this.registroDemanda = this.admonFormService.registro;
@@ -30,9 +23,22 @@ export class ResolucionFormComponent implements OnInit {
       this.admonFormService.registro = registro;
       this.registroDemanda = registro;
     });
+
+    this.initializeForm();
    }
 
   ngOnInit() {
+  }
+
+  initializeForm() {
+    this.resolucionForm = new FormGroup({
+      motivoTermino: new FormControl(this.registroDemanda.motivoTermino, Validators.required),
+      instanciaConclusion: new FormControl(this.registroDemanda.autoridadMateria, Validators.required),
+      sentidoTermino: new FormControl(this.registroDemanda.sentidoTermino, Validators.required),
+      fechaTermino: new FormControl(this.registroDemanda.fechaTermino, Validators.required),
+      importeHistorico: new FormControl(this.registroDemanda.importeHistorico, Validators.maxLength(20)),
+      importeActualizado: new FormControl(this.registroDemanda.importeActualizado, Validators.maxLength(20))
+    });
   }
 
   guardarResolucion() {

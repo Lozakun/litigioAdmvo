@@ -65,6 +65,7 @@ export class RegistroFormComponent implements OnInit {
       this.registroDemanda.participaWalmart = this.participaWalmart.value;
       this.registroDemanda.importeHistorico = this.importeHistorico.value;
       this.registroDemanda.registroRealizado = true;
+      this.registroDemanda.estadoDemanda = 'En Registro';
 
       this.admonFormService.registroAgregado.emit(this.registroDemanda);
       console.log(this.registroDemanda);
@@ -96,5 +97,13 @@ export class RegistroFormComponent implements OnInit {
       nombreDeterminante: 'Sams Universidad',
       formatoDeterminante: 'SAMS'
     };
+  }
+
+  validaFecha(fechaDemanda) {
+    if (fechaDemanda > this.fechaNotificacion) {
+      return true;
+    } else {
+      return null;
+    }
   }
 }

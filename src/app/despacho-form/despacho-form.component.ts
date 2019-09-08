@@ -86,6 +86,7 @@ export class DespachoFormComponent implements OnInit {
       this.registroDemanda.despacho = this.despachoForm.get('despachoControl').value;
       this.registroDemanda.abogados = this.abogados;
       this.registroDemanda.registroDespacho = true;
+      this.registroDemanda.estadoDemanda = 'Activa';
       console.log(this.registroDemanda);
       this.router.navigate(['../', 'audiencia'], {relativeTo: this.route});
     } else {

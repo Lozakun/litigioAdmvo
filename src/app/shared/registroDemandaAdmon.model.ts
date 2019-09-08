@@ -49,6 +49,7 @@ export class RegistroDemandaAdmon {
         public sentidoTermino: string,
         public fechaTermino: Date,
         public importeActualizado: number,
-        public estadoDemanda: string
+        public estadoDemanda: string,
+        public fechaRegistro: Date
     ) { }
 }
