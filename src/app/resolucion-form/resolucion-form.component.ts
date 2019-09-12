@@ -49,7 +49,7 @@ export class ResolucionFormComponent implements OnInit {
     this.admonFormService.registro.fechaTermino = this.resolucionForm.get('fechaTermino').value;
     this.admonFormService.registro.importeActualizado = this.resolucionForm.get('importeActualizado').value;
     this.admonFormService.registro.estadoDemanda = 'Terminada';
-
+    this.admonFormService.actualizarRegistro(this.registroDemanda);
     console.log(this.registroDemanda);
   }
 

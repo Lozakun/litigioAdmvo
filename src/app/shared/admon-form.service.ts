@@ -1,6 +1,9 @@
-import { RegistroDemandaAdmon } from './registroDemandaAdmon.model';
-import { EventEmitter, Output } from '@angular/core';
+import { EventEmitter, Output, Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
+import { RegistroDemandaAdmon } from './registroDemandaAdmon.model';
+
+@Injectable({providedIn: 'root'})
 export class AdmonFormService {
     @Output() registro: RegistroDemandaAdmon;
     registroAgregado = new EventEmitter<RegistroDemandaAdmon>();
@@ -11,10 +14,37 @@ export class AdmonFormService {
     //         demanda.participaTercero, demanda.motivoDemanda, demanda.sociedad, demanda.determinante, demanda.participaWalmart,
     //         demanda.importeHistorico);
     // }
-
+    constructor(private http: HttpClient) {}
     obtenerRegistro() {
+        this.fetchRegistros();
         return this.registroAgregado;
     }
 
-    // updateRegistro() {}
+    // guardarRegistro(registro: RegistroDemandaAdmon) {
+    //     this.http.post('https://prtllegal.firebaseio.com/litadmvo.json',
+    //     registro).subscribe(responseData => {
+    //         console.log(responseData);
+    //     });
+    // }
+
+    guardarRegistro(registro: RegistroDemandaAdmon) {
+        this.http.post('https://prtllegal.firebaseio.com/registrolitadmvo.json',
+        registro).subscribe(responseData => {
+            console.log(responseData);
+        });
+    }
+
+    actualizarRegistro(registro: RegistroDemandaAdmon) {
+        this.http.put('https://prtllegal.firebaseio.com/registrolitadmvo.json',
+        registro).subscribe(responseData => {
+            console.log(responseData);
+        });
+    }
+
+    private fetchRegistros() {
+        this.http.get<AdmonFormService>('https://prtllegal.firebaseio.com/registrolitadmvo.json')
+        .subscribe(registros => {
+            console.log(registros);
+        });
+    }
 }

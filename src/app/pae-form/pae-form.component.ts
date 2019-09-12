@@ -29,7 +29,8 @@ export class PaeFormComponent implements OnInit {
   tiposEmbargo = ['Administrativo', 'Con Extracción', 'Bloqueo y/o Aseguramiento de Cta Bancaria'];
   changesSaved = false;
 
-  constructor(private admonFormService: AdmonFormService, private router: Router, private route: ActivatedRoute) { }
+  constructor(private admonFormService: AdmonFormService, private router: Router,
+              private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.registroDemanda = this.admonFormService.registro;
@@ -45,6 +46,7 @@ export class PaeFormComponent implements OnInit {
     console.log('Avanza PAE');
     this.guardarPAE();
     this.changesSaved = true;
+    this.admonFormService.actualizarRegistro(this.registroDemanda);
     this.router.navigate(['../', 'despacho'], {relativeTo: this.route});
   }
 

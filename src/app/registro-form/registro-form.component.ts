@@ -1,11 +1,12 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
-import { FormGroup, FormControl, Validators, Form } from '@angular/forms';
+import { Component, OnInit, Input } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { Proveedor } from '../shared/proveedor.model';
 import { Determinante } from '../shared/determinante.model';
 import { RegistroDemandaAdmon } from '../shared/registroDemandaAdmon.model';
 import { AdmonFormService } from '../shared/admon-form.service';
+import { AuthService } from '../shared/auth.service';
 
 @Component({
   selector: 'app-registro-form',
@@ -28,7 +29,8 @@ export class RegistroFormComponent implements OnInit {
 
   registroForm: FormGroup;
 
-  constructor(private admonFormService: AdmonFormService, private router: Router) {
+  constructor(private admonFormService: AdmonFormService, private router: Router,
+              private auth: AuthService) {
     this.admonFormService.registroAgregado.subscribe(
       (registro: RegistroDemandaAdmon) => {
         this.registroDemanda = registro;
@@ -40,26 +42,28 @@ export class RegistroFormComponent implements OnInit {
       this.registroDemanda = this.admonFormService.registro;
       this.initializaForm();
       console.log(this.registroForm);
+      this.auth.login();
+      this.admonFormService.obtenerRegistro();
   }
 
   initializaForm() {
     console.log(Date.now());
     this.registroForm = new FormGroup({
-      oficio: new FormControl(this.registroDemanda.oficio),
-      expediente: new FormControl(this.registroDemanda.expediente),
+      oficio: new FormControl(this.registroDemanda.oficio, Validators.required),
+      expediente: new FormControl(this.registroDemanda.expediente, Validators.required),
       // tslint:disable-next-line:max-line-length
       fechaNotificacion: new FormControl(!this.registroDemanda.fechaNotificacion ? this.toJSONLocal(this.todayDate) : this.registroDemanda.fechaNotificacion,
       [Validators.required, this.validaFecha.bind(this)]),
       fechaDemanda: new FormControl(this.registroDemanda.fechaDemanda, [Validators.required,
         this.validaFecha.bind(this)]),
-      tipoDemanda: new FormControl(this.registroDemanda.tipoDemanda),
-      participaTercero: new FormControl(this.registroDemanda.participaTercero),
-      motivoDemanda: new FormControl(this.registroDemanda.motivoDemanda),
-      sociedad: new FormControl(this.registroDemanda.sociedad),
-      formato: new FormControl({value: this.registroDemanda.determinante.formatoDeterminante, disabled: true}),
-      participaWalmart: new FormControl(this.registroDemanda.participaWalmart),
+      tipoDemanda: new FormControl(this.registroDemanda.tipoDemanda, Validators.required),
+      participaTercero: new FormControl(this.registroDemanda.participaTercero, Validators.required),
+      motivoDemanda: new FormControl(this.registroDemanda.motivoDemanda, Validators.required),
+      sociedad: new FormControl(this.registroDemanda.sociedad, Validators.required),
+      formato: new FormControl({value: this.registroDemanda.determinante.formatoDeterminante, disabled: true}, Validators.required),
+      participaWalmart: new FormControl(this.registroDemanda.participaWalmart, Validators.required),
       importeHistorico: new FormControl(this.registroDemanda.importeHistorico, [Validators.required, Validators.pattern(/^[1-9]+[0-9]*$/)]),
-      autoridadImpositora: new FormControl(this.registroDemanda.autoridadImpositora),
+      autoridadImpositora: new FormControl(this.registroDemanda.autoridadImpositora, Validators.required),
     });
   }
 
@@ -84,6 +88,7 @@ export class RegistroFormComponent implements OnInit {
 
       this.admonFormService.registroAgregado.emit(this.registroDemanda);
       console.log(this.registroDemanda);
+      this.admonFormService.guardarRegistro(this.registroDemanda);
       this.router.navigate(['litigioAdmvo', 'pae']);
     } else {
       console.log('Debes terminar de llenar los campos!');

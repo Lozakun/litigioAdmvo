@@ -88,6 +88,7 @@ export class DespachoFormComponent implements OnInit {
       this.registroDemanda.registroDespacho = true;
       this.registroDemanda.estadoDemanda = 'Activa';
       console.log(this.registroDemanda);
+      this.admonFormService.actualizarRegistro(this.registroDemanda);
       this.router.navigate(['../', 'audiencia'], {relativeTo: this.route});
     } else {
       console.log('No debería estar aqui');

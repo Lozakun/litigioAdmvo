@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 import { AdmonFormService } from './shared/admon-form.service';
 import { RegistroDemandaAdmon } from './shared/registroDemandaAdmon.model';
@@ -19,17 +20,20 @@ export class AppComponent implements OnInit {
               'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
   fechaYear: string;
 
-  constructor(private admonService: AdmonFormService) {
+  constructor(private admonService: AdmonFormService, private http: HttpClient) {
     this.admonService.registroAgregado.subscribe(
       (registro: RegistroDemandaAdmon) => {
         this.registroDemanda = registro;
         this.admonService.registro.folioDemanda = this.registroDemanda.folioDemanda;
         this.admonService.registro = registro;
+        // this.admonService.guardarRegistro(this.registroDemanda);
       }
     );
   }
 
   ngOnInit() {
+
+    // this.registroDemanda = this.admonService.obtenerRegistro().subscribe();
     this.fechaDemanda = new Date();
     this.fechaDay = this.fechaDemanda.getDay().toString();
     this.fechaMonth = this.months[this.fechaDemanda.getMonth() + 1];
@@ -48,8 +52,6 @@ export class AppComponent implements OnInit {
     this.registroDemanda = this.admonService.registro;
     console.log(this.registroDemanda);
     this.folioDemanda = this.registroDemanda.folioDemanda;
-    console.log(this.folioDemanda);
-
   }
 
 }

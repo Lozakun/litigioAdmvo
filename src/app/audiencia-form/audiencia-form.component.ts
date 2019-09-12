@@ -100,6 +100,7 @@ export class AudienciaFormComponent implements OnInit {
     this.validaSentencia(this.audienciaForm.get('sentenciaDefinitiva') as FormControl, 1);
     this.validaSentencia(this.audienciaForm.get('resultadoFinal') as FormControl, 2);
     this.validaSentencia(this.audienciaForm.get('estadoFinal') as FormControl, 3);
+    this.admonFormService.actualizarRegistro(this.registroDemanda);
     this.router.navigate(['litigioAdmvo', 'resolucion']);
     console.log(this.registroDemanda);
     console.log(this.registroDemanda.sentenciaTFJFA != null);
